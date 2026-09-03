@@ -1,0 +1,55 @@
+---
+import type { Lang, Project } from '../data/site';
+import { cta } from '../data/site';
+import { projectPath } from '../lib/lang';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  /** Render as the large lead entry instead of a secondary index row. */
+  featured?: boolean;
+}
+const { project, lang, featured = false } = Astro.props;
+const href = projectPath(lang, project.slug);
+---
+
+{
+  featured ? (
+    <article class="feature">
+      <div class="feature-head">
+        <span class="feature-index mono">{project.index}</span>
+        <span class="feature-domain">{project.domain[lang]}</span>
+        <span class="feature-rule" aria-hidden="true"></span>
+      </div>
+      <div class="feature-body">
+        <h3 class="feature-title">
+          <a href={href}>{project.title[lang]}</a>
+        </h3>
+        <p class="feature-one">{project.oneLiner[lang]}</p>
+        <ul class="feature-tags">
+          {project.tags[lang].map((t) => <li>{t}</li>)}
+        </ul>
+        <ol class="feature-steps" aria-label={project.title[lang]}>
+          {project.steps[lang].slice(0, 4).map((step, index) => (
+            <li><span class="mono">{String(index + 1).padStart(2, '0')}</span>{step}</li>
+          ))}
+        </ol>
+        <a class="feature-link" href={href}>
+          {cta.readCase[lang]} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </article>
+  ) : (
+    <a class="work-row" href={href}>
+      <span class="row-index mono">{project.index}</span>
+      <span class="row-main">
+        <span class="row-line">
+          <span class="row-title">{project.title[lang]}</span>
+          <span class="row-domain">{project.domain[lang]}</span>
+        </span>
+        <span class="row-one">{project.oneLiner[lang]}</span>
+      </span>
+      <span class="row-arr" aria-hidden="true">→</span>
+    </a>
+  )
+}

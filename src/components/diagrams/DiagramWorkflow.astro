@@ -1,0 +1,77 @@
+---
+import { misc } from '../../data/site';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+  steps: string[];
+}
+const { lang, steps } = Astro.props;
+
+const feedback = misc.workflowNote[lang];
+const desc =
+  lang === 'zh' ? `六阶段工作流示意：${steps.join(' → ')}` : `Six-stage workflow: ${steps.join(' → ')}`;
+---
+
+<figure class="wf" role="img" aria-label={desc}>
+  <ol class="wf-row">
+    {
+      steps.flatMap((s, i) => [
+        <li class="wf-node">
+          <span class="wf-idx">{String(i + 1).padStart(2, '0')}</span>
+          <span class="wf-label">{s}</span>
+        </li>,
+        i < steps.length - 1 ? (
+          <li class="wf-arrow" aria-hidden="true">→</li>
+        ) : null,
+      ])
+    }
+  </ol>
+  <p class="wf-note">{feedback}</p>
+</figure>
+
+<style>
+  .wf {
+    margin: 0;
+  }
+  .wf-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .wf-node {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1 1 104px;
+    min-width: 104px;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--rule-strong);
+    border-left: 3px solid var(--cobalt);
+    background: var(--paper-2);
+    border-radius: var(--radius);
+  }
+  .wf-idx {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--cobalt);
+  }
+  .wf-label {
+    font-size: var(--text-sm);
+    line-height: 1.35;
+  }
+  .wf-arrow {
+    font-family: var(--font-mono);
+    color: var(--cobalt);
+    font-size: var(--text-sm);
+    flex: 0 0 auto;
+  }
+  .wf-note {
+    margin: 0.8rem 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+  }
+</style>

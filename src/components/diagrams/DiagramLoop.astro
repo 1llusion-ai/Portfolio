@@ -1,0 +1,115 @@
+---
+import { misc } from '../../data/site';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+  steps: string[];
+}
+const { lang, steps } = Astro.props;
+
+const t = {
+  center: misc.loop.center[lang],
+  sub: misc.loop.sub[lang],
+};
+const desc =
+  lang === 'zh'
+    ? `闭环示意：${steps.join(' → ')}，循环回写学习者状态。`
+    : `Closed loop: ${steps.join(' → ')}, writing state back each round.`;
+
+const C = 230;
+const R = 148;
+// four compass nodes (top, right, bottom, left)
+const nodes = [
+  { x: C, y: C - R, w: 118, h: 52, label: steps[0] },
+  { x: C + R, y: C, w: 118, h: 52, label: steps[1] },
+  { x: C, y: C + R, w: 118, h: 52, label: steps[2] },
+  { x: C - R, y: C, w: 118, h: 52, label: steps[3] },
+];
+// clockwise tangent arrowheads at the 4 quadrants of the ring
+const arrows = [
+  { x: C + R * 0.707, y: C - R * 0.707, r: -45 },
+  { x: C + R * 0.707, y: C + R * 0.707, r: 45 },
+  { x: C - R * 0.707, y: C + R * 0.707, r: 135 },
+  { x: C - R * 0.707, y: C - R * 0.707, r: -135 },
+];
+---
+
+<svg class="loop" viewBox="0 0 460 460" role="img" aria-label={desc}>
+  <defs>
+    <marker id="arrow-loop" markerWidth="8" markerHeight="8" refX="5.5" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="var(--cobalt)" />
+    </marker>
+  </defs>
+
+  <!-- the ring -->
+  <circle
+    cx={C}
+    cy={C}
+    r={R}
+    fill="none"
+    stroke="var(--rule-strong)"
+    stroke-width="1.4"
+  />
+
+  <!-- tangent arrowheads -->
+  {arrows.map((a) => (
+    <path
+      d={`M ${a.x - 10} ${a.y} L ${a.x + 8} ${a.y}`}
+      stroke="var(--cobalt)"
+      stroke-width="1.6"
+      marker-end="url(#arrow-loop)"
+      transform={`rotate(${a.r} ${a.x} ${a.y})`}
+    />
+  ))}
+
+  <!-- center label -->
+  <text x={C} y={C - 4} class="loop-center" text-anchor="middle">↻</text>
+  <text x={C} y={C + 14} class="loop-center" text-anchor="middle">{t.center}</text>
+  <text x={C} y={C + 32} class="loop-sub" text-anchor="middle">{t.sub}</text>
+
+  <!-- nodes -->
+  {nodes.map((n) => (
+    <g>
+      <rect x={n.x - n.w / 2} y={n.y - n.h / 2} width={n.w} height={n.h} rx="3" fill="var(--paper-2)" stroke="var(--rule-strong)" />
+      <foreignObject x={n.x - n.w / 2 + 6} y={n.y - n.h / 2} width={n.w - 12} height={n.h}>
+        <div class="loop-node">{n.label}</div>
+      </foreignObject>
+    </g>
+  ))}
+</svg>
+
+<style>
+  .loop {
+    width: 100%;
+    height: auto;
+    max-width: 460px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .loop-node {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    line-height: 1.25;
+    color: var(--ink-2);
+  }
+  .loop-center {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+  .loop-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    fill: var(--ink-3);
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import { global, sections, approach, about, cta, identity, projects } from '../data/site';
+import type { Lang } from '../data/site';
+import { anchor } from '../lib/lang';
+import HeroRecord from './HeroRecord.astro';
+import SectionHead from './SectionHead.astro';
+import WorkCard from './WorkCard.astro';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const S = sections;
+const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
+---
+
+<!-- 1 · Hero -->
+<section class="hero" aria-label={heroLabel}>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="profile-dossier">
+        <p class="hero-index mono">{lang === 'zh' ? '00 / 关于' : '00 / ABOUT'}</p>
+        <h1 id="hero-title" class="hero-title">{lang === 'zh' ? '肖凡' : 'XiaoFan'}</h1>
+        <p class="hero-question">HOW CAN WE MAKE LLM SYSTEMS RELIABLE?</p>
+        <p class="hero-subquestion">
+          {lang === 'zh'
+            ? '如何让大模型真正可靠地完成复杂任务？'
+            : 'How do we make large models reliably complete complex, real-world tasks?'}
+        </p>
+        <p class="profile-statement">
+          {lang === 'zh'
+            ? '我关注 Agent 工作流、领域检索与模型可靠性，尝试将模型能力转化为可运行、可验证、可迭代、可恢复的系统能力。'
+            : 'I work on agent workflows, domain retrieval, and model reliability—turning model capability into systems that are runnable, verifiable, iterable, and recoverable.'}
+        </p>
+        <p class="profile-directions mono">AGENT SYSTEMS / RETRIEVAL / RELIABILITY</p>
+        <p class="profile-principle">
+          {lang === 'zh' ? '让 LLM 系统可迭代、可验证、可恢复。' : 'Making LLM systems iterative, verifiable, and recoverable.'}
+        </p>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn--primary" href={anchor('work', lang)}>{cta.viewWork[lang]} →</a>
+        <a class="btn btn--ghost" href={identity.github} target="_blank" rel="noopener">
+          {cta.github[lang]} ↗
+        </a>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <HeroRecord lang={lang} />
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Selected work -->
+<section class="section" id="work" aria-label={S.work.title[lang]}>
+  <div class="container">
+    <SectionHead
+      index={S.work.index}
+      eyebrow={S.work.eyebrow[lang]}
+      title={S.work.title[lang]}
+      note={S.work.note[lang]}
+    />
+    <div class="work-list" data-reveal>
+      <WorkCard project={projects[0]} lang={lang} featured />
+      <ol class="work-rows">
+        {projects.slice(1).map((p) => (
+          <li>
+            <WorkCard project={p} lang={lang} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Approach -->
+<section class="section" id="approach" aria-label={S.approach.title[lang]}>
+  <div class="container">
+    <SectionHead
+      index={S.approach.index}
+      eyebrow={S.approach.eyebrow[lang]}
+      title={S.approach.title[lang]}
+      note={S.approach.note[lang]}
+    />
+    <ol class="approach-list" data-reveal>
+      {approach.map((pr) => (
+        <li class="principle">
+          <span class="p-index mono">{pr.index}</span>
+          <h3 class="p-title">{pr.title[lang]}</h3>
+          <p class="p-body">{pr.body[lang]}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- 4 · About -->
+<section class="section" id="about" aria-label={S.about.title[lang]}>
+  <div class="container">
+    <div class="about-grid">
+      <SectionHead
+        index={S.about.index}
+        eyebrow={S.about.eyebrow[lang]}
+        title={S.about.title[lang]}
+      />
+      <div class="about-body" data-reveal>
+        <p class="about-bio">{about.bio[lang]}</p>
+        <ul class="role-tags">
+          {about.roleTags[lang].map((t) => <li>{t}</li>)}
+        </ul>
+        <p class="about-pub">{about.publication[lang]}</p>
+        <div class="about-links">
+          <a href={identity.github} target="_blank" rel="noopener">
+            {about.githubLabel[lang]} ↗
+          </a>
+          <a href={`mailto:${identity.email}`}>{identity.email}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · Contact -->
+<section class="section" id="contact" aria-label={S.contact.title[lang]}>
+  <div class="container">
+    <div class="contact-box" data-reveal>
+      <p class="sec-eyebrow">{S.contact.eyebrow[lang]}</p>
+      <h2>{S.contact.title[lang]}</h2>
+      <p class="contact-avail">{global.availability[lang]}</p>
+      <div class="contact-cta">
+        <a class="btn btn--primary" href={`mailto:${identity.email}`}>{identity.email}</a>
+        <a class="btn btn--ghost" href={identity.github} target="_blank" rel="noopener">
+          {cta.github[lang]} ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

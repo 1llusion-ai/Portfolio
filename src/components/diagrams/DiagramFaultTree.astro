@@ -1,0 +1,159 @@
+---
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+  symptom: string;
+  hypotheses: string[];
+  verify: string;
+  repair: string;
+  regression: string;
+}
+const { lang, symptom, hypotheses, verify, repair, regression } = Astro.props;
+const desc =
+  lang === 'zh'
+    ? `故障树：${symptom} → 三条假设（${hypotheses.join(' / ')}）→ ${verify} → ${repair} → ${regression}。`
+    : `Fault tree: ${symptom} → three hypotheses (${hypotheses.join(' / ')}) → ${verify} → ${repair} → ${regression}.`;
+
+const CX = 280;
+const ROOT_Y = 40;
+const HYP_Y = 120;
+const VER_Y = 214;
+const REP_Y = 296;
+const REG_Y = 378;
+const HYP_X = [92, 280, 468];
+const HYP_W = 176;
+const HYP_H = 56;
+const ROOT_W = 248;
+const ROOT_H = 44;
+const VER_W = 232;
+const VER_H = 42;
+const REP_W = 208;
+const REP_H = 42;
+const REG_W = 248;
+const REG_H = 42;
+
+// orthogonal elbow edges so the tree reads cleanly
+const edges = [
+  // root -> each hypothesis
+  `M ${CX} ${ROOT_Y + ROOT_H} L ${CX} ${HYP_Y - 16}`,
+  `M ${HYP_X[0] + HYP_W / 2} ${HYP_Y - 16} L ${HYP_X[0] + HYP_W / 2} ${HYP_Y}`,
+  `M ${CX} ${HYP_Y - 16} L ${HYP_X[0] + HYP_W / 2} ${HYP_Y - 16}`,
+  `M ${HYP_X[2] + HYP_W / 2} ${HYP_Y - 16} L ${HYP_X[2] + HYP_W / 2} ${HYP_Y}`,
+  `M ${CX} ${HYP_Y - 16} L ${HYP_X[2] + HYP_W / 2} ${HYP_Y - 16}`,
+  // each hypothesis -> verification
+  `M ${HYP_X[0] + HYP_W / 2} ${HYP_Y + HYP_H} L ${HYP_X[0] + HYP_W / 2} ${HYP_Y + HYP_H + 12}`,
+  `M ${HYP_X[2] + HYP_W / 2} ${HYP_Y + HYP_H} L ${HYP_X[2] + HYP_W / 2} ${HYP_Y + HYP_H + 12}`,
+  `M ${CX} ${VER_Y - 14} L ${CX} ${VER_Y}`,
+  `M ${HYP_X[0] + HYP_W / 2} ${HYP_Y + HYP_H + 12} L ${CX} ${HYP_Y + HYP_H + 12}`,
+  `M ${HYP_X[2] + HYP_W / 2} ${HYP_Y + HYP_H + 12} L ${CX} ${HYP_Y + HYP_H + 12}`,
+  // vertical chain to the fix and regression
+  `M ${CX} ${VER_Y + VER_H} L ${CX} ${REP_Y}`,
+  `M ${CX} ${REP_Y + REP_H} L ${CX} ${REG_Y}`,
+];
+---
+
+<svg class="tree" viewBox="0 0 560 452" role="img" aria-label={desc}>
+  <defs>
+    <marker id="arrow-tree" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 Z" fill="var(--ink-3)" />
+    </marker>
+  </defs>
+
+  <g fill="none" stroke="var(--ink-3)" stroke-width="1.2" marker-end="url(#arrow-tree)">
+    {edges.map((d) => <path d={d} />)}
+  </g>
+
+  <!-- root: symptom -->
+  <rect x={CX - ROOT_W / 2} y={ROOT_Y} width={ROOT_W} height={ROOT_H} rx="3" fill="var(--ink)" />
+  <foreignObject x={CX - ROOT_W / 2 + 10} y={ROOT_Y} width={ROOT_W - 20} height={ROOT_H}>
+    <div class="fnode fnode--root">{symptom}</div>
+  </foreignObject>
+
+  <!-- hypotheses -->
+  {hypotheses.map((h, i) => (
+    <g>
+      <rect
+        x={HYP_X[i]}
+        y={HYP_Y}
+        width={HYP_W}
+        height={HYP_H}
+        rx="3"
+        fill="var(--paper-2)"
+        stroke="var(--rule-strong)"
+      />
+      <foreignObject x={HYP_X[i] + 8} y={HYP_Y} width={HYP_W - 16} height={HYP_H}>
+        <div class="fnode">
+          <span class="fhyp-idx">{String(i + 1).padStart(2, '0')}</span>
+          <span>{h}</span>
+        </div>
+      </foreignObject>
+    </g>
+  ))}
+
+  <!-- verification -->
+  <rect x={CX - VER_W / 2} y={VER_Y} width={VER_W} height={VER_H} rx="3" fill="var(--cobalt-tint)" stroke="var(--cobalt)" />
+  <foreignObject x={CX - VER_W / 2 + 10} y={VER_Y} width={VER_W - 20} height={VER_H}>
+    <div class="fnode fnode--cobalt">{verify}</div>
+  </foreignObject>
+
+  <!-- guarded repair -->
+  <rect x={CX - REP_W / 2} y={REP_Y} width={REP_W} height={REP_H} rx="3" fill="var(--lime-tint)" stroke="var(--lime-deep)" />
+  <foreignObject x={CX - REP_W / 2 + 10} y={REP_Y} width={REP_W - 20} height={REP_H}>
+    <div class="fnode fnode--lime">{repair}</div>
+  </foreignObject>
+
+  <!-- regression -->
+  <rect x={CX - REG_W / 2} y={REG_Y} width={REG_W} height={REG_H} rx="3" fill="var(--cobalt-tint)" stroke="var(--cobalt)" />
+  <foreignObject x={CX - REG_W / 2 + 10} y={REG_Y} width={REG_W - 20} height={REG_H}>
+    <div class="fnode fnode--cobalt">{regression}</div>
+  </foreignObject>
+</svg>
+
+<style>
+  .tree {
+    width: 100%;
+    height: auto;
+    max-width: 620px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .fnode {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    text-align: center;
+    color: var(--ink-2);
+  }
+  .fnode--root {
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .fnode--cobalt {
+    color: var(--cobalt-deep);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .fnode--lime {
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .fhyp-idx {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--cobalt);
+  }
+</style>

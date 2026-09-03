@@ -1,0 +1,26 @@
+---
+import { projects, sections } from '../data/site';
+import type { Lang } from '../data/site';
+import { projectPath } from '../lib/lang';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<!-- A live workbench built only from the portfolio's real project data. -->
+<aside class="workbench" aria-label={sections.work.title[lang]}>
+  {projects.map((project, index) => (
+    <a class={`bench-card bench-card--${index + 1}`} href={projectPath(lang, project.slug)}>
+      <span class="bench-index mono">{project.index}</span>
+      <span class="bench-domain">{project.domain[lang]}</span>
+      <strong>{project.title[lang]}</strong>
+      <span class="bench-tags">{project.tags[lang].slice(0, 2).join(' / ')}</span>
+      <span class="bench-track" aria-hidden="true">
+        {project.steps[lang].slice(0, 4).map((_, step) => <i class={`track-dot track-dot--${step + 1}`}></i>)}
+      </span>
+      <span class="bench-arrow" aria-hidden="true">→</span>
+    </a>
+  ))}
+</aside>

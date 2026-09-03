@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Home from '../../components/Home.astro';
+import { global, identity } from '../../data/site';
+
+const lang = 'en';
+const title = `${identity.name} · ${global.headline.en}`;
+const description = global.intro.en;
+---
+
+<BaseLayout lang={lang} title={title} description={description} pathname={Astro.url.pathname}>
+  <Home lang={lang} />
+</BaseLayout>

@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../data/site';
+import { identity } from '../data/site';
+import { switchPath, homePath } from '../lib/lang';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  pathname: string;
+  ogType?: string;
+  /** 404 pages: canonical/hreflang resolve to the locale homes, never to
+      constructed /<lang>/404/ URLs that do not exist. */
+  isNotFound?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  pathname,
+  ogType = 'website',
+  isNotFound = false,
+} = Astro.props;
+
+const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
+const locale = lang === 'zh' ? 'zh_CN' : 'en_US';
+const other = lang === 'zh' ? 'en' : 'zh';
+const canonical = isNotFound
+  ? new URL(homePath(lang), Astro.site ?? Astro.url).href
+  : new URL(pathname, Astro.site ?? Astro.url).href;
+const otherHref = isNotFound
+  ? new URL(homePath(other), Astro.site ?? Astro.url).href
+  : new URL(switchPath(pathname, other), Astro.site ?? Astro.url).href;
+// x-default: the corresponding Chinese route on normal pages, the Chinese
+// home on 404s. switchPath is base-aware, so sub-path deploys stay correct.
+const defaultHref = isNotFound
+  ? new URL(homePath('zh'), Astro.site ?? Astro.url).href
+  : new URL(
+      lang === 'zh' ? pathname : switchPath(pathname, 'zh'),
+      Astro.site ?? Astro.url,
+    ).href;
+const skipLabel = lang === 'zh' ? '跳到主要内容' : 'Skip to content';
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={other} href={otherHref} />
+    <link rel="alternate" hreflang={lang} href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={defaultHref} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:site_name" content={`${identity.name} · Evidence Ledger`} />
+    <meta name="theme-color" content="#f5f6f2" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <!-- Fonts are self-hosted via @fontsource (IBM Plex Sans/Mono, Noto Serif SC)
+         — see the @import statements at the top of src/styles/global.css. No
+         third-party requests are made at runtime. -->
+    <script is:inline>
+      // gate reveal animations behind JS so content is visible without it
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{skipLabel}</a>
+    <ProgressBar />
+    <Header lang={lang} pathname={pathname} isNotFound={isNotFound} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} pathname={pathname} isNotFound={isNotFound} />
+
+    <script>
+      // Scroll-triggered reveal. Runs on every page; respects reduced motion.
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+        );
+        // Anything already on screen at load becomes visible immediately, so
+        // above-the-fold content is never stranded at the hidden opacity.
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        els.forEach((el) => {
+          if (el.getBoundingClientRect().top < vh) {
+            el.classList.add('in');
+          } else {
+            io.observe(el);
+          }
+        });
+      } else {
+        els.forEach((el) => el.classList.add('in'));
+      }
+    </script>
+  </body>
+</html>

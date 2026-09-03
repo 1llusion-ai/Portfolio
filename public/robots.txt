@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# The resume PDF is intentionally not published here.

@@ -1,0 +1,86 @@
+---
+import type { Lang, MemoryLayers } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+  memory: MemoryLayers;
+}
+const { lang, memory } = Astro.props;
+const desc =
+  lang === 'zh'
+    ? `双层记忆示意：${memory.shortTitle.zh}（${memory.shortDesc.zh}）与 ${memory.longTitle.zh}（${memory.longDesc.zh}），由${memory.gate.zh}连接。`
+    : `Two-layer memory: ${memory.shortTitle.en} (${memory.shortDesc.en}) and ${memory.longTitle.en} (${memory.longDesc.en}), connected by the ${memory.gate.en}.`;
+---
+
+<figure class="mem" role="img" aria-label={desc}>
+  <div class="mem-box mem--short">
+    <span class="mem-title">{memory.shortTitle[lang]}</span>
+    <span class="mem-desc">{memory.shortDesc[lang]}</span>
+  </div>
+
+  <div class="mem-mid">
+    <span class="mem-arrow mem-arrow--down" aria-hidden="true">↓ {memory.write[lang]}</span>
+    <span class="mem-gate">{memory.gate[lang]}</span>
+    <span class="mem-arrow mem-arrow--up" aria-hidden="true">↑ {memory.expire[lang]}</span>
+  </div>
+
+  <div class="mem-box mem--long">
+    <span class="mem-title">{memory.longTitle[lang]}</span>
+    <span class="mem-desc">{memory.longDesc[lang]}</span>
+  </div>
+</figure>
+
+<style>
+  .mem {
+    margin: 0;
+    max-width: 460px;
+  }
+  .mem-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius);
+  }
+  .mem--short {
+    border: 1px solid var(--rule-strong);
+    background: var(--paper-2);
+  }
+  .mem--long {
+    border: 1px solid var(--rule-strong);
+    border-left: 3px solid var(--lime-deep);
+    background: var(--paper-2);
+  }
+  .mem-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+  .mem-desc {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+  }
+  .mem-mid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.55rem 0;
+  }
+  .mem-gate {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    color: var(--cobalt);
+    background: var(--cobalt-tint);
+    border: 1px solid var(--cobalt);
+    border-radius: 999px;
+    padding: 0.35em 1em;
+  }
+  .mem-arrow {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-3);
+  }
+</style>

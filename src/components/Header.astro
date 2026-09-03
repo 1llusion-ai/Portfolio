@@ -1,0 +1,120 @@
+---
+import { identity, nav, languages } from '../data/site';
+import type { Lang } from '../data/site';
+import { homePath, anchor, switchPath } from '../lib/lang';
+import Mark from './Mark.astro';
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+  /** On the 404 page, language switches resolve to the locale homes. */
+  isNotFound?: boolean;
+}
+const { lang, pathname, isNotFound = false } = Astro.props;
+
+const links = [
+  { id: 'work', label: nav.work[lang], href: anchor('work', lang) },
+  { id: 'approach', label: nav.approach[lang], href: anchor('approach', lang) },
+  { id: 'about', label: nav.about[lang], href: anchor('about', lang) },
+  { id: 'contact', label: nav.contact[lang], href: anchor('contact', lang) },
+];
+const onCase = pathname.includes('/projects/');
+const currentId = onCase ? 'work' : null;
+
+const other = lang === 'zh' ? 'en' : 'zh';
+// On the 404 page only: language switches point at the locale homes instead
+// of a constructed /<lang>/404/ path that does not exist.
+const switchTo = (code: Lang) =>
+  isNotFound ? homePath(code) : switchPath(pathname, code);
+const otherHref = switchTo(other);
+const switchLabel =
+  lang === 'zh' ? nav.switchLabel.en : nav.switchLabel.zh;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={homePath(lang)} aria-label={`${identity.name} — home`}>
+      <span class="brand-mark" aria-hidden="true"><Mark /></span>
+      <span class="brand-name">{identity.name}</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label={lang === 'zh' ? '主导航' : 'Primary'}>
+      {links.map((l) => (
+        <a
+          class="nav-link"
+          href={l.href}
+          aria-current={l.id === currentId ? 'true' : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-switch" role="group" aria-label={lang === 'zh' ? '语言切换' : 'Language'}>
+        {languages.map((l) => (
+          <a
+            href={switchTo(l.code)}
+            aria-current={l.code === lang ? 'true' : undefined}
+            aria-label={l.full[lang]}
+          >
+            {l.short}
+          </a>
+        ))}
+      </div>
+
+      <div class="nav-mobile">
+        <button
+          type="button"
+          class="nav-mobile-toggle"
+          aria-expanded="false"
+          aria-controls="nav-mobile-panel"
+        >
+          {nav.menu[lang]}
+        </button>
+        <div class="nav-mobile-panel" id="nav-mobile-panel">
+          {links.map((l) => (
+            <a
+              href={l.href}
+              aria-current={l.id === currentId ? 'true' : undefined}
+            >
+              {l.label}
+            </a>
+          ))}
+          <a href={otherHref} aria-label={switchLabel}>{switchLabel}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu: a real <button> trigger with a true aria-expanded/aria-controls
+  // state. The panel is only hidden when JS is active (`.js` class); without JS
+  // it remains visible and navigable as a static fallback.
+  const trigger = document.querySelector<HTMLButtonElement>('.nav-mobile-toggle');
+  const panel = document.getElementById('nav-mobile-panel');
+  const menu = trigger?.closest('.nav-mobile');
+  if (trigger && panel && menu) {
+    const setOpen = (open: boolean) => {
+      trigger.setAttribute('aria-expanded', String(open));
+      panel.classList.toggle('is-open', open);
+    };
+    trigger.addEventListener('click', () => {
+      setOpen(trigger.getAttribute('aria-expanded') !== 'true');
+    });
+    // Close on Escape, on an outside click, and when the desktop nav returns.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') setOpen(false);
+    });
+    document.addEventListener('click', (e) => {
+      if (trigger.getAttribute('aria-expanded') === 'true' && e.target instanceof Node && !menu.contains(e.target)) setOpen(false);
+    });
+    const mq = window.matchMedia('(min-width: 820px)');
+    mq.addEventListener('change', (ev) => {
+      if (ev.matches) setOpen(false);
+    });
+    // Start closed when JS is active (the `.js` class already hides the panel).
+    setOpen(false);
+  }
+</script>

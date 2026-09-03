@@ -1,0 +1,20 @@
+---
+// Root redirects to the Chinese home (/zh/). BASE-aware.
+const base = import.meta.env.BASE_URL;
+const target = `${base}zh/`;
+const href = new URL(target, Astro.site ?? Astro.url).href;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={href} />
+    <title>XiaoFan · Evidence Ledger</title>
+  </head>
+  <body style="font-family:system-ui,sans-serif;background:#f4efe2;color:#20261e;padding:3rem;line-height:1.7">
+    <p><a href={target}>前往中文首页 / Go to the Chinese homepage</a></p>
+    <p><a href={`${base}en/`}>English →</a></p>
+  </body>
+</html>

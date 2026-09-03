@@ -1,0 +1,21 @@
+---
+// Thin cobalt reading-progress rule fixed to the very top.
+// A position indicator, not motion — always rendered.
+---
+
+<div class="progress" aria-hidden="true">
+  <span class="progress-bar" data-progress></span>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  const update = () => {
+    const el = document.documentElement;
+    const max = el.scrollHeight - el.clientHeight;
+    const p = max > 0 ? Math.min(1, el.scrollTop / max) : 0;
+    bar!.style.transform = `scaleX(${p})`;
+  };
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+</script>

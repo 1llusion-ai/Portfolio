@@ -1,0 +1,110 @@
+---
+import { misc } from '../../data/site';
+import type { Lang } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+
+const t = {
+  axis: misc.chart.axis[lang],
+  baseline: misc.chart.baseline[lang],
+  tuned: misc.chart.tuned[lang],
+  note: misc.chart.note[lang],
+};
+const desc =
+  lang === 'zh'
+    ? `占位对比示意：横轴为“${t.baseline}”与“${t.tuned}”，纵轴为${t.axis}；不含真实数据。`
+    : `Placeholder comparison: x-axis shows “${t.baseline}” and “${t.tuned}”, y-axis is ${t.axis}; no real data shown.`;
+
+const BASE_L = 0;
+const BASE_Y = 175;
+const TUNE_L = 1;
+const TUNE_Y = 95;
+const BAR_W = 72;
+const BASELINE_Y = 236;
+const GRID = [120, 168, 216];
+const XL = [152, 342];
+const TIP_Y = [BASE_Y - 8, TUNE_Y - 8];
+const TIP_X = [XL[0], XL[1]];
+const HATCH = 'M0 5 L5 0 M5 5 L10 0 M10 5 L15 0';
+---
+
+<svg class="cmp" viewBox="0 0 480 306" role="img" aria-label={desc}>
+  <!-- title / axis label -->
+  <text x="16" y="26" class="cmp-axis" text-anchor="start">{t.axis}</text>
+
+  <!-- recessive gridlines -->
+  <g stroke="var(--rule)" stroke-width="1">
+    {GRID.map((y) => <line x1="40" y1={y} x2="452" y2={y} />)}
+  </g>
+
+  <!-- baseline bar -->
+  <rect x={XL[BASE_L] - BAR_W / 2} y={BASE_Y} width={BAR_W} height={BASELINE_Y - BASE_Y} fill="var(--ink)" opacity="0.9" />
+  <!-- tuned bar -->
+  <rect x={XL[TUNE_L] - BAR_W / 2} y={TUNE_Y} width={BAR_W} height={BASELINE_Y - TUNE_Y} fill="var(--cobalt)" />
+
+  <!-- placeholder hatch on both bars: honest about no data -->
+  <g stroke="var(--paper)" stroke-width="1.1" opacity="0.75">
+    {[BASE_L, TUNE_L].flatMap((b) =>
+      Array.from({ length: 6 }, (_, i) => (
+        <path d={HATCH} transform={`translate(${XL[b] - BAR_W / 2 + 7 + i * 12} ${BASELINE_Y - 14})`} />
+      )),
+    )}
+  </g>
+
+  <!-- data-ends -->
+  <g stroke="var(--ink-3)" stroke-width="1">
+    {TIP_X.map((x, i) => <line x1={x} y1={TIP_Y[i]} x2={x} y2="14" />)}
+  </g>
+
+  <!-- axis baseline -->
+  <line x1="40" y1={BASELINE_Y} x2="452" y2={BASELINE_Y} stroke="var(--ink)" stroke-width="1.4" />
+
+  <!-- direct labels under each bar -->
+  <text x={XL[BASE_L]} y={BASELINE_Y + 26} class="cmp-label" text-anchor="middle">{t.baseline}</text>
+  <text x={XL[TUNE_L]} y={BASELINE_Y + 26} class="cmp-label" text-anchor="middle">{t.tuned}</text>
+  <text x={XL[BASE_L]} y={BASELINE_Y + 44} class="cmp-sub" text-anchor="middle">—</text>
+  <text x={XL[TUNE_L]} y={BASELINE_Y + 44} class="cmp-sub" text-anchor="middle">↑</text>
+
+  <!-- placeholder note -->
+  <g transform="translate(16 272)">
+    <rect x="0" y="0" width="220" height="22" rx="3" fill="none" stroke="var(--lime-deep)" />
+    <text x="10" y="15" class="cmp-note">◷ {t.note}</text>
+  </g>
+</svg>
+
+<style>
+  .cmp {
+    width: 100%;
+    height: auto;
+    max-width: 560px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .cmp-axis {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    fill: var(--ink-3);
+  }
+  .cmp-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    fill: var(--ink);
+  }
+  .cmp-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--ink-3);
+  }
+  .cmp-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--lime-deep);
+  }
+</style>

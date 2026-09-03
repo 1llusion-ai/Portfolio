@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Evidence Ledger mark: paper tile, ruled baseline, verified check -->
+  <rect width="64" height="64" rx="6" fill="#f4efe2"/>
+  <rect x="2" y="2" width="60" height="60" rx="5" fill="none" stroke="#20261e" stroke-width="2.5"/>
+  <!-- ruled baseline -->
+  <path d="M16 52 H48" stroke="#20261e" stroke-width="2"/>
+  <!-- cobalt registration ticks -->
+  <path d="M9 15 V9 H15" fill="none" stroke="#36508f" stroke-width="3" stroke-linecap="round"/>
+  <path d="M55 49 V55 H49" fill="none" stroke="#36508f" stroke-width="3" stroke-linecap="round"/>
+  <!-- verified check in acid-lime -->
+  <path d="M19 33 L28 42 L46 21" fill="none" stroke="#7d8f12" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

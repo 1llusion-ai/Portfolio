@@ -1,0 +1,18 @@
+---
+interface Props {
+  index: string;
+  eyebrow: string;
+  title: string;
+  note?: string;
+}
+const { index, eyebrow, title, note } = Astro.props;
+---
+
+<header class="sec-head">
+  <span class="sec-index mono">{index}</span>
+  <div>
+    <p class="sec-eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    {note && <p class="sec-note">{note}</p>}
+  </div>
+</header>

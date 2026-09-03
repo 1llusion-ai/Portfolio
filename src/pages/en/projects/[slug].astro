@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectPage from '../../../components/ProjectPage.astro';
+import { projects, identity } from '../../../data/site';
+import type { Project } from '../../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((p: Project) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const lang = 'en';
+const title = `${project.title.en} · ${identity.name}`;
+const description = project.oneLiner.en;
+---
+
+<BaseLayout lang={lang} title={title} description={description} pathname={Astro.url.pathname} ogType="article">
+  <ProjectPage project={project} lang={lang} />
+</BaseLayout>
