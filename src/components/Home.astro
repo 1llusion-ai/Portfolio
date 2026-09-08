@@ -16,39 +16,18 @@ const base = import.meta.env.BASE_URL;
 const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
 ---
 
-<!-- 1 · Hero -->
-<section class="hero" aria-label={heroLabel}>
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <div class="profile-dossier">
-        <p class="hero-index mono">{lang === 'zh' ? '00 / 关于' : '00 / ABOUT'}</p>
-        <h1 id="hero-title" class="hero-title">{lang === 'zh' ? '肖凡' : 'XiaoFan'}</h1>
-        <p class="hero-question">HOW CAN WE MAKE LLM SYSTEMS RELIABLE?</p>
-        <p class="hero-subquestion">
-          {lang === 'zh'
-            ? '如何让大模型真正可靠地完成复杂任务？'
-            : 'How do we make large models reliably complete complex, real-world tasks?'}
-        </p>
-        <p class="profile-statement">
-          {lang === 'zh'
-            ? '我关注 Agent 工作流、领域检索与模型可靠性，尝试将模型能力转化为可运行、可验证、可迭代、可恢复的系统能力。'
-            : 'I work on agent workflows, domain retrieval, and model reliability—turning model capability into systems that are runnable, verifiable, iterable, and recoverable.'}
-        </p>
-        <p class="profile-directions mono">AGENT SYSTEMS / RETRIEVAL / RELIABILITY</p>
-        <p class="profile-principle">
-          {lang === 'zh' ? '让 LLM 系统可迭代、可验证、可恢复。' : 'Making LLM systems iterative, verifiable, and recoverable.'}
-        </p>
-      </div>
-      <div class="hero-cta">
-        <a class="btn btn--primary" href={anchor('work', lang)}>{cta.viewWork[lang]} →</a>
-        <a class="btn btn--ghost" href={identity.github} target="_blank" rel="noopener">
-          {cta.github[lang]} ↗
-        </a>
-      </div>
+<div class="portfolio-home">
+<section class="intro" aria-label={heroLabel}>
+  <div class="container intro-grid">
+    <div class="intro-copy">
+      <p class="intro-eyebrow">XIAOFAN / LLM & AGENT ENGINEERING</p>
+      <p class="intro-name">{lang === 'zh' ? '你好，我是肖凡。' : 'Hello, I’m XiaoFan.'}</p>
+      <h1>{lang === 'zh' ? '让模型能力，' : 'From model capability'}<br/><em>{lang === 'zh' ? '走进真实任务。' : 'to working systems.'}</em></h1>
+      <p class="intro-description">{lang === 'zh' ? '我构建 Agent 工作流、领域检索与教学助手，关注复杂任务如何被拆解、执行和验证。这里记录我的系统设计、工程取舍与评测结果。' : 'I build agent workflows, domain retrieval systems and learning assistants. My work explores how complex tasks are planned, executed and verified—with the design decisions and evaluations to explain the results.'}</p>
+      <div class="intro-actions"><a class="intro-button" href={anchor('work', lang)}>{cta.viewWork[lang]} <span>↘</span></a><a href={`mailto:${identity.email}`}>{lang === 'zh' ? '联系我' : 'Get in touch'} ↗</a></div>
+      <p class="intro-background">{lang === 'zh' ? '厦门大学 · 人工智能硕士在读 / 小米 · 算法实习经历' : 'AI master’s student, Xiamen University / Former algorithm intern, Xiaomi'}</p>
     </div>
-    <div class="hero-panel">
-      <HeroRecord lang={lang} />
-    </div>
+    <HeroRecord lang={lang} />
   </div>
 </section>
 
@@ -106,10 +85,14 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
         title={S.about.title[lang]}
       />
       <div class="about-body" data-reveal>
+        <p class="about-summary">{about.bio[lang]}</p>
           <svg class="logo-filter-defs" aria-hidden="true" width="0" height="0"><defs><filter id="remove-logo-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 3"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs></svg>
           <div class="profile-row"><h3>{lang === 'zh' ? '教育背景' : 'Education'}</h3><div class="profile-entries">{about.education.map(e=><div class="organization"><img class="organization-logo" src={`${base}${e.logo}`} alt="" width="48" height="48" loading="lazy"/><div><h4>{e.school[lang]}</h4><p>{e.degree[lang]}</p>{e.detail[lang] && <p class="profile-meta">{e.detail[lang]}</p>}</div></div>)}</div></div>
-          <div class="profile-row"><h3>{lang === 'zh' ? '实习经历' : 'Experience'}</h3><div class="organization"><img class="organization-logo" src={`${base}images/organizations/xiaomi.ico`} alt="" width="48" height="48" loading="lazy"/><div><h4>{about.internship.title[lang]}</h4><p>{about.internship.team[lang]}</p><p class="profile-meta">{about.internship.period[lang]}</p></div></div></div>
+          <div class="profile-row"><h3>{lang === 'zh' ? '实习经历' : 'Experience'}</h3><div class="organization"><img class="organization-logo" src={`${base}images/organizations/xiaomi.ico`} alt="" width="48" height="48" loading="lazy"/><div><h4>{about.internship.title[lang]}</h4><p>{about.internship.team[lang]}</p><p class="profile-meta">{about.internship.period[lang]}</p><p>{about.internship.description[lang]}</p></div></div></div>
       </div>
     </div>
   </div>
 </section>
+
+<section class="closing" id="contact"><div class="container closing-inner"><div><p class="intro-eyebrow">LET’S CONNECT</p><h2>{lang === 'zh' ? '聊聊下一个值得解决的问题。' : 'Let’s talk about the next problem.'}</h2><p>{lang === 'zh' ? '正在寻找大模型算法与 Agent 相关机会，欢迎交流项目与实践。' : 'Seeking opportunities in LLM algorithms and agent systems. Happy to discuss the work.'}</p></div><a href={`mailto:${identity.email}`}>{lang === 'zh' ? '发邮件给我' : 'Email me'} ↗</a></div></section>
+</div>

@@ -70,10 +70,10 @@ export const sections = {
     zh: '方法',
     en: 'Approach',
     eyebrow: { zh: '原则', en: 'Principles' },
-    title: { zh: '从机制到证据', en: 'From Mechanism to Evidence' },
+    title: { zh: '我如何推进一个系统', en: 'How I build systems' },
     note: {
-      zh: '每个案例都从问题、个人贡献、核心机制、验证方法与边界展开；只展示经过脱敏和公开许可的内容。',
-      en: 'Each case explains the problem, my contribution, the mechanism, validation, and boundaries. Only sanitized and approved material is shown.',
+      zh: '从拆解任务到验证结果，把每次实验转化为下一次迭代的依据。',
+      en: 'Break down the task, validate the result, and use each experiment to guide the next iteration.',
     },
   },
   about: {
@@ -95,26 +95,26 @@ export const sections = {
 export const approach = [
   {
     index: '01',
-    title: { zh: '证据门禁式迭代', en: 'Evidence-gated iteration' },
+    title: { zh: '用评测决定下一步', en: 'Let evaluation guide iteration' },
     body: {
-      zh: '每一次改动都以可复现的证据为前提：离线指标、回归样本、人工抽检。证据达标才进入下一轮，让迭代跟随测量而不是感觉。',
-      en: 'Every change is gated on reproducible evidence—offline metrics, regression samples, manual spot checks. Only evidence that clears the bar moves the work forward, so iteration follows measurement, not intuition.',
+      zh: '改动前明确基线与验收标准，改动后检查离线指标、回归样本和人工抽检结果。既看目标问题是否改善，也看已有能力是否退化。',
+      en: 'Define the baseline and acceptance criteria before making changes. Then check offline metrics, regression cases and manual samples to verify improvements and catch losses in existing capabilities.',
     },
   },
   {
     index: '02',
-    title: { zh: '面向上下文的分工', en: 'Context-aware delegation' },
+    title: { zh: '按任务边界组织协作', en: 'Give each agent a clear scope' },
     body: {
-      zh: '把复杂任务按上下文拆给子代理，主代理保留判断与关键路径。控制上下文膨胀，让系统既扩展得开，也追得回。',
-      en: 'Complex tasks are delegated by context to subagents while the primary agent keeps judgment and the critical path. Bounding context growth keeps the system scalable and traceable.',
+      zh: '主代理负责决策与关键路径，子代理处理范围明确的资料和样本任务。用持久化状态记录进度，让长链路任务可以追踪和恢复。',
+      en: 'The primary agent owns decisions and the critical path; subagents handle scoped document and sample tasks. Persisted progress makes long workflows traceable and recoverable.',
     },
   },
   {
     index: '03',
-    title: { zh: '先评测，再沉淀记忆', en: 'Evaluation before memory' },
+    title: { zh: '只复用经过验证的经验', en: 'Reuse validated experience' },
     body: {
-      zh: '记忆不是任意写入，而是经过评测、去重之后的产出。只有验证过的事实才进入长期记忆，记忆因此可以依赖。',
-      en: 'Memory is a verified artifact, not arbitrary writes. Only evaluated, deduplicated facts enter long-term memory, which is what makes it trustworthy.',
+      zh: '区分本轮任务状态与长期经验。经验经过评测和去重后再写入记忆，减少重复探索，也避免让未经验证的结论影响后续决策。',
+      en: 'Separate current task state from long-term experience. Evaluate and deduplicate lessons before storing them, reducing repeated exploration and keeping unverified conclusions out of future decisions.',
     },
   },
 ];
@@ -239,11 +239,11 @@ export const projects: Project[] = [
     domain: { zh: 'Agent 工作流', en: 'Agent Workflow' },
     title: {
       zh: 'IoT 模型自动迭代 Agent',
-      en: 'An Agent-Driven Iteration Loop for IoT Control Models',
+      en: 'Agent-driven IoT model iteration',
     },
     oneLiner: {
-      zh: '以 Claude Code 为决策中枢，结合子代理分工、受控脚本与文件化状态，串联问题诊断、样本构造、训练评测、自动部署和经验复用。',
-      en: 'Claude Code coordinates subagents, controlled scripts and persistent file-based state to connect diagnosis, sample preparation, training, evaluation, automated deployment and reusable experience.',
+      zh: '将 IoT 模型修复中分散的诊断、数据构造、训练与部署串成可恢复的 Agent 工作流，以评测决定是否进入下一阶段。',
+      en: 'A recoverable agent workflow connects IoT model diagnosis, data preparation, training and deployment. Evaluation gates determine when each iteration can advance.',
     },
     tags: { zh: ['Agent 编排', '模型迭代', '状态与记忆'], en: ['Agent Orchestration', 'Model Iteration', 'State & Memory'] },
     steps: {

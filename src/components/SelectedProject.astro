@@ -23,18 +23,18 @@ const teaching=zh ? [['01','教材检索','混合检索课程材料，为回答�
   </div>
 </article>
 <style>
-.case-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,5rem);padding:3.5rem 0;border-top:1px solid #ccc9c1;color:#292a27;}
-.case-intro,.case-evidence{min-width:0;}
+.case-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,5rem);padding:clamp(1.3rem,3vw,2.5rem);margin-bottom:2rem;border:2px solid var(--ink);box-shadow:7px 7px 0 var(--ink);background:var(--paper-2);color:var(--ink);}
+.case-entry:nth-child(1){border-top:8px solid var(--butter);}.case-entry:nth-child(2){border-top:8px solid var(--violet);}.case-entry:nth-child(3){border-top:8px solid var(--blue);}.case-intro,.case-evidence{min-width:0;}.case-evidence{background:rgba(21,35,29,.035);padding:1.2rem;}
 .case-kicker{display:flex;align-items:center;gap:1rem;color:#77756e;font-size:.75rem;letter-spacing:.04em;margin:0 0 1.6rem;}
-.case-kicker span{font-family:var(--font-mono);color:#9a563c;}
+.case-kicker span{font-family:var(--font-mono);color:var(--cobalt-deep);}
 h3{font-size:clamp(1.5rem,2.4vw,2rem);font-weight:600;line-height:1.45;margin:0 0 1.15rem;letter-spacing:-.025em;}
 h3 a{color:inherit;text-decoration:none;}
 .case-description{font-size:.95rem;line-height:1.95;color:#696960;margin:0;max-width:40ch;}
-.case-outcome{font-size:.78rem;line-height:1.8;color:#985537;margin:1rem 0 0;}
+.case-outcome{font-size:.78rem;line-height:1.8;color:var(--cobalt-deep);margin:1rem 0 0;}
 .case-links{display:flex;gap:1.7rem;margin-top:2rem;}
 .case-links a{font-size:.85rem;color:#343630;text-decoration:none;border-bottom:1px solid #b8b8ae;padding-bottom:.35rem;}
-.case-links span{margin-left:.65rem;color:#9a563c;}
-a:hover{color:#9a563c;}
+.case-links span{margin-left:.65rem;color:var(--cobalt-deep);}
+a:hover{color:var(--cobalt-deep);}
 .evidence-heading{font-size:.8rem;color:#77756e;margin:0 0 1.6rem;line-height:1.6;}
 .result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem 1.5rem;margin:0;}
 .result-grid dt{font-size:.78rem;color:#73736a;}
@@ -48,7 +48,7 @@ a:hover{color:#9a563c;}
 .score-row strong{font-size:.85rem;font-weight:400;}
 .score-row>span{font-size:1.25rem;font-variant-numeric:tabular-nums;}
 .score-row small{font-size:.7rem;margin-left:.15rem;color:#89877f;}
-.score-row.best{color:#985537;}
+.score-row.best{color:var(--cobalt-deep);}
 .score-row.best strong{font-weight:600;}
 .evidence-foot{font-size:.7rem;line-height:1.8;color:#858279;margin:1.15rem 0 0;}
 .teaching-lines{display:grid;gap:1rem;}
@@ -56,5 +56,6 @@ a:hover{color:#9a563c;}
 .teaching-lines li>span{font:400 .65rem/1.9 var(--font-mono);color:#a7a299;}
 .teaching-lines strong{font-size:.9rem;font-weight:500;}
 .teaching-lines p{font-size:.78rem;color:#77756e;line-height:1.8;margin:.2rem 0 0;}
-@media(max-width:760px){.case-entry{grid-template-columns:1fr;gap:2rem;padding:2.5rem 0;}.case-kicker{margin-bottom:1rem;}.case-description{max-width:none;}.case-links{margin-top:1.3rem;}.result-grid dd{font-size:clamp(1.1rem,4.8vw,1.6rem);}}
+@media(max-width:760px){.case-entry{grid-template-columns:1fr;gap:2rem;padding:1.2rem;}.case-kicker{margin-bottom:1rem;}.case-description{max-width:none;}.case-links{margin-top:1.3rem;}.result-grid dd{font-size:clamp(1.1rem,4.8vw,1.6rem);}}
+@media(max-width:540px){.result-grid{grid-template-columns:1fr;gap:1.1rem;}.result-grid dd{font-size:1.4rem;}.iteration-line{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;}.iteration-line li+li:before{display:none;}.case-evidence{padding:1rem;}}
 </style>
