@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc"><title id="title">Course Agent architecture</title><desc id="desc">Question routing, evidence retrieval, controlled teaching tools, answer generation and learner-memory feedback. Dashed amber panel describes the in-progress routing refactor.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#4c5c6d"/></marker></defs><style>text{font-family:'IBM Plex Sans','Noto Sans SC','Microsoft YaHei',sans-serif;fill:#253343}.title{font-size:30px;font-weight:600}.heading{font-size:21px;font-weight:600}.body{font-size:17px}.small{font-size:15px;fill:#617184}.panel{fill:#fafbfd;stroke:#ced6df;stroke-width:1.5}.edge{fill:none;stroke:#4c5c6d;stroke-width:1.8;marker-end:url(#arrow)}.feedback{fill:none;stroke:#4c5c6d;stroke-width:1.8;stroke-dasharray:7 5;marker-end:url(#arrow)}</style><rect width="1600" height="1050" fill="white"/>
+<text x="48" y="53" class="title" text-anchor="start">课程教学 Agent：证据与学习状态驱动的回答</text>
+<text x="48" y="83" class="small" text-anchor="start">系统结构  /  实线：请求与数据流  ·  虚线：学习状态反馈  ·  琥珀色：重构分支</text>
+<rect x="40" y="120" width="350" height="600" rx="10" class="panel"/>
+<rect x="430" y="120" width="600" height="600" rx="10" class="panel"/>
+<rect x="1070" y="120" width="490" height="600" rx="10" class="panel"/>
+<text x="62" y="157" class="heading" text-anchor="start">(a) 请求与执行策略</text>
+<text x="452" y="157" class="heading" text-anchor="start">(b) 上下文与受控能力</text>
+<text x="1092" y="157" class="heading" text-anchor="start">(c) 回答与交互</text>
+<rect x="65" y="185" width="300" height="105" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="218" class="heading" text-anchor="start">学生提问</text>
+<text x="85" y="249" class="body" text-anchor="start">课程概念 / 代码 / 学习计划</text>
+<rect x="65" y="330" width="300" height="130" rx="7" fill="#fff" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="363" class="heading" text-anchor="start">QueryPipeline</text>
+<text x="85" y="394" class="body" text-anchor="start">预处理、保守重写、课程边界</text>
+<text x="85" y="420" class="body" text-anchor="start">规则路由 + 语义分类兜底</text>
+<rect x="65" y="505" width="300" height="165" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="538" class="heading" text-anchor="start">确定性执行策略</text>
+<text x="85" y="569" class="body" text-anchor="start">选择检索要求与执行路径</text>
+<text x="85" y="595" class="body" text-anchor="start">约束工具访问与调用权限</text>
+<text x="85" y="621" class="body" text-anchor="start">按需加载教学上下文</text>
+<path d="M215 290V330" class="edge"/>
+<path d="M215 460V505" class="edge"/>
+<rect x="465" y="185" width="530" height="130" rx="7" fill="#edf4f9" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="218" class="heading" text-anchor="start">教材检索</text>
+<text x="485" y="249" class="body" text-anchor="start">BM25 + ChromaDB → RRF</text>
+<text x="485" y="275" class="body" text-anchor="start">保留页码与来源；向量超时回退 BM25</text>
+<rect x="465" y="355" width="530" height="145" rx="7" fill="#eef5f0" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="388" class="heading" text-anchor="start">教学技能</text>
+<text x="485" y="419" class="body" text-anchor="start">学习路径 · 个性化讲解 · 误解纠正</text>
+<text x="485" y="445" class="body" text-anchor="start">代码审查：静态分析，不执行代码</text>
+<rect x="465" y="540" width="530" height="130" rx="7" fill="#fff" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="573" class="heading" text-anchor="start">受控工具</text>
+<text x="485" y="604" class="body" text-anchor="start">课程表 / 显式联网 / Docker 代码沙箱</text>
+<text x="485" y="630" class="body" text-anchor="start">运行代码需明确请求，沙箱不可用则停止</text>
+<path d="M365 582H410V250H465" class="edge"/>
+<path d="M410 427H465" class="edge"/>
+<path d="M410 582V605H465" class="edge"/>
+<rect x="1100" y="245" width="430" height="140" rx="7" fill="#edf4f9" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="1120" y="278" class="heading" text-anchor="start">回答生成与依据检查</text>
+<text x="1120" y="309" class="body" text-anchor="start">按任务组合证据、画像与工具结果</text>
+<text x="1120" y="335" class="body" text-anchor="start">必要检索缺失时由 Guard 补齐</text>
+<path d="M995 250H1048V300H1100" class="edge"/>
+<path d="M995 427H1048V330H1100" class="edge"/>
+<path d="M995 605H1048V360H1100" class="edge"/>
+<rect x="1100" y="465" width="430" height="140" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="1120" y="498" class="heading" text-anchor="start">可追溯的流式回答</text>
+<text x="1120" y="529" class="body" text-anchor="start">回答正文 + 引用来源 + 执行轨迹</text>
+<text x="1120" y="555" class="body" text-anchor="start">Vue 3 / SSE · 停止生成与断线恢复</text>
+<path d="M1315 385V465" class="edge"/>
+<text x="1100" y="700" class="small" text-anchor="start">FastAPI 会话桥接</text>
+<rect x="430" y="780" width="600" height="135" rx="7" fill="#eef5f0" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="450" y="813" class="heading" text-anchor="start">(d) 学习事件 → 学习画像</text>
+<text x="450" y="844" class="body" text-anchor="start">概念提及 / 澄清 / 误解 / 掌握 → 可回放事件流</text>
+<text x="450" y="870" class="body" text-anchor="start">StudentProfile：近期关注、薄弱点与章节进度</text>
+<path d="M1315 605V847H1030" class="feedback"/>
+<path d="M430 847H215V670" class="feedback"/>
+<text x="1130" y="823" class="small" text-anchor="start">对话中的学习信号</text>
+<text x="240" y="821" class="small" text-anchor="start">后续轮次按需注入</text>
+<rect x="40" y="953" width="1520" height="68" rx="7" fill="#fdf7eb" stroke="#bc9551" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="60" y="981" class="heading" text-anchor="start">重构中  /  LEARNING_ANSWER</text>
+<text x="60" y="1007" class="small" text-anchor="start">统一学习问答路径，移除额外语义分类调用；执行权限仍由策略决定。真实模型 A/B 尚待验证。</text>
+</svg>

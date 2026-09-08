@@ -17,9 +17,7 @@ const { lang } = Astro.props;
       <span class="bench-domain">{project.domain[lang]}</span>
       <strong>{project.title[lang]}</strong>
       <span class="bench-tags">{project.tags[lang].slice(0, 2).join(' / ')}</span>
-      <span class="bench-track" aria-hidden="true">
-        {project.steps[lang].slice(0, 4).map((_, step) => <i class={`track-dot track-dot--${step + 1}`}></i>)}
-      </span>
+      {project.outcome && <span class="bench-outcome">{project.outcome[lang]}</span>}
       <span class="bench-arrow" aria-hidden="true">→</span>
     </a>
   ))}

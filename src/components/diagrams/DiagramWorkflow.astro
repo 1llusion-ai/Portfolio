@@ -10,7 +10,7 @@ const { lang, steps } = Astro.props;
 
 const feedback = misc.workflowNote[lang];
 const desc =
-  lang === 'zh' ? `六阶段工作流示意：${steps.join(' → ')}` : `Six-stage workflow: ${steps.join(' → ')}`;
+  lang === 'zh' ? `${steps.length} 阶段工作流示意：${steps.join(' → ')}` : `${steps.length}-stage workflow: ${steps.join(' → ')}`;
 ---
 
 <figure class="wf" role="img" aria-label={desc}>

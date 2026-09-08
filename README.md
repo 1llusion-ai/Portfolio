@@ -83,7 +83,7 @@ BASE_PATH=/<repo-name>/ npm run build
 
 ## Editing content
 
-Everything visible is in **`src/data/site.ts`** — one file, both languages:
+Shared content lives in **`src/data/site.ts`**, with Project 01 details in **`src/data/agentCase.ts`**, both bilingual:
 
 - **Global identity** — eyebrow / headline / intro / availability under `global`.
 - **Navigation & sections** — `nav`, `sections`.
@@ -99,26 +99,17 @@ Everything visible is in **`src/data/site.ts`** — one file, both languages:
 
 Page components only render this data — no copy is hardcoded in `.astro` files.
 
-## Public-safety checklist (read before deploying)
+## Content sources
 
-- [ ] No real metrics: all numbers are placeholders ("指标待公开评审 · pending
-      public review"). Keep it that way.
-- [ ] No prompts, schemas, model names, code, screenshots, or internal links
-      anywhere in `src/`.
-- [ ] **`秋招_肖凡.pdf` must never be committed or deployed.** It is gitignored,
-      and the deployment only publishes `dist/` — but verify it is absent from
-      the published site at `https://<owner>.github.io/<repo>/`.
-- [ ] No headshot, phone number, QQ email, physical address, or PDF link is
-      exposed (none are in the source).
-- [ ] The only external links are the GitHub profile and
-      `https://github.com/1llusion-ai/ds-course-agent`; the only publication
-      mention is the "EI-indexed conference paper" placeholder.
-- [ ] The safety disclosure and "sanitized material" note render on every case
-      page and in the footer.
+Project results are transcribed from the supplied resume and project records in
+`src/data/site.ts` and `src/data/agentCase.ts`. Preserve metric scope: team delivery,
+migration accuracy, query-category retrieval and overall few-shot retrieval are
+separate measures. The reliability case has no resume metric; do not invent one.
+The original resume PDF and private contact information are not website assets.
 
 ## Typography & assets
 
-- All fonts are **self-hosted** via `@fontsource`: **Noto Serif SC** (display),
+- All fonts are **self-hosted** via `@fontsource`: **Noto Sans SC** (Chinese),
   **IBM Plex Sans** (body), **IBM Plex Mono** (meta) — with robust local fallbacks
   (`Songti SC`, `SimSun`, `PingFang SC`, …). No runtime third-party requests.
 - No raster images — all texture (dot grid, pinstripe paper) is CSS, and all
@@ -130,3 +121,13 @@ Page components only render this data — no copy is hardcoded in `.astro` files
   outlines, 44px touch targets, keyboard-operable nav.
 - `prefers-reduced-motion` disables reveal/pulse/transition motion.
 - All diagrams ship with descriptive `aria-label`s plus visible captions.
+
+
+## Projects and engineering notes
+
+The homepage contains three projects: model iteration, semantic retrieval and the
+teaching agent. Project navigation is driven by `projects` in `src/data/site.ts`.
+Engineering notes are maintained separately in `src/data/notes.ts`, with bilingual
+list and article routes under `/zh/notes/` and `/en/notes/`. The former reliability
+project URL redirects to its note. Its current text preserves the existing brief;
+a detailed root-cause account still needs the corresponding incident record.

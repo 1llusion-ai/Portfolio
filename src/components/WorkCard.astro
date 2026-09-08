@@ -1,6 +1,7 @@
 ---
 import type { Lang, Project } from '../data/site';
 import { cta } from '../data/site';
+import { agentCase } from '../data/agentCase';
 import { projectPath } from '../lib/lang';
 
 interface Props {
@@ -26,11 +27,12 @@ const href = projectPath(lang, project.slug);
           <a href={href}>{project.title[lang]}</a>
         </h3>
         <p class="feature-one">{project.oneLiner[lang]}</p>
+        {project.index === '01' ? <dl class="feature-results">{agentCase.validation.results.map(r => <div><dd>{r.value}</dd><dt>{r.label[lang]}</dt></div>)}</dl> : project.outcome && <p class="feature-outcome">{project.outcome[lang]}</p>}
         <ul class="feature-tags">
           {project.tags[lang].map((t) => <li>{t}</li>)}
         </ul>
         <ol class="feature-steps" aria-label={project.title[lang]}>
-          {project.steps[lang].slice(0, 4).map((step, index) => (
+          {project.steps[lang].map((step, index) => (
             <li><span class="mono">{String(index + 1).padStart(2, '0')}</span>{step}</li>
           ))}
         </ol>
@@ -48,6 +50,7 @@ const href = projectPath(lang, project.slug);
           <span class="row-domain">{project.domain[lang]}</span>
         </span>
         <span class="row-one">{project.oneLiner[lang]}</span>
+        {project.outcome && <span class="row-outcome">{project.outcome[lang]}</span>}
       </span>
       <span class="row-arr" aria-hidden="true">→</span>
     </a>

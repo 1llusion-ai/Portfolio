@@ -1,7 +1,7 @@
 ---
 import { identity, nav, languages } from '../data/site';
 import type { Lang } from '../data/site';
-import { homePath, anchor, switchPath } from '../lib/lang';
+import { homePath, anchor, switchPath, notesPath } from '../lib/lang';
 import Mark from './Mark.astro';
 
 interface Props {
@@ -14,12 +14,12 @@ const { lang, pathname, isNotFound = false } = Astro.props;
 
 const links = [
   { id: 'work', label: nav.work[lang], href: anchor('work', lang) },
+  { id: 'notes', label: nav.notes[lang], href: notesPath(lang) },
   { id: 'approach', label: nav.approach[lang], href: anchor('approach', lang) },
   { id: 'about', label: nav.about[lang], href: anchor('about', lang) },
-  { id: 'contact', label: nav.contact[lang], href: anchor('contact', lang) },
 ];
 const onCase = pathname.includes('/projects/');
-const currentId = onCase ? 'work' : null;
+const currentId = onCase ? 'work' : pathname.includes('/notes/') ? 'notes' : null;
 
 const other = lang === 'zh' ? 'en' : 'zh';
 // On the 404 page only: language switches point at the locale homes instead

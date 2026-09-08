@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import NotesPage from '../../../components/NotesPage.astro';
+const lang = 'zh';
+const title = '工程笔记 · XiaoFan';
+---
+<BaseLayout lang={lang} title={title} description={title} pathname={Astro.url.pathname}><NotesPage lang={lang} /></BaseLayout>

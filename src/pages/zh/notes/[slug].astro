@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import NotesPage from '../../../components/NotesPage.astro';
+import { notes } from '../../../data/notes';
+export function getStaticPaths() { return notes.map(note => ({params:{slug:note.slug},props:{note}})); }
+const {note}=Astro.props;
+const lang='zh';
+---
+<BaseLayout lang={lang} title={note.title[lang] + ' · XiaoFan'} description={note.oneLiner[lang]} pathname={Astro.url.pathname} ogType="article"><NotesPage lang={lang} note={note} /></BaseLayout>

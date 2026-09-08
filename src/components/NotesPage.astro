@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../data/site';
+import { notes } from '../data/notes';
+import type { EngineeringNote } from '../data/notes';
+import { notesPath } from '../lib/lang';
+interface Props { lang: Lang; note?: EngineeringNote }
+const {lang,note}=Astro.props;
+const zh=lang==='zh';
+const chapters = note?.sections.map(s => ({title:s.title[lang],body:s.body[lang]})) ?? [];
+const nextNote = note ? notes[(notes.findIndex(n => n.slug === note.slug) + 1) % notes.length] : undefined;
+---
+<div class="container notes-page">
+  {note ? <article><a class="back-link" href={notesPath(lang)}>← {zh?'工程笔记':'Engineering notes'}</a><header><p class="eyebrow">{note.domain[lang]} / {note.index}</p><h1>{note.title[lang]}</h1><p class="intro">{note.oneLiner[lang]}</p></header><nav class="reading-path" aria-label={zh?'本文目录':'In this note'}>{chapters.map((c,i)=><a href={`#step-${i+1}`}><span>{String(i+1).padStart(2,'0')}</span>{c.title}</a>)}</nav>{chapters.map((c,i)=><section id={`step-${i+1}`}><h2>{c.title}</h2>{c.body.split('\n').map(paragraph=><p>{paragraph}</p>)}</section>)}{nextNote && <footer><span>{zh?'下一篇笔记':'Next note'}</span><a href={notesPath(lang,nextNote.slug)}>{nextNote.title[lang]} →</a></footer>}</article> : <><header><p class="eyebrow">FIELD NOTES</p><h1>{zh?'工程笔记':'Engineering notes'}</h1><p class="intro">{zh?'记录做项目时遇到的问题，以及如何定位、修复与验证。':'Problems encountered while building projects, and how I investigate, fix and verify them.'}</p></header><ol>{notes.map(n=><li><a class="note-preview" href={notesPath(lang,n.slug)}><span class="mono">{n.index} / {n.domain[lang]}</span><h2>{n.title[lang]}</h2><p>{n.oneLiner[lang]}</p><span>{zh?'阅读笔记':'Read note'} →</span></a></li>)}</ol></>}
+</div>
+<style>
+.notes-page {max-width:960px;padding-block:3rem 5rem;}
+article {max-width:740px;margin-inline:auto;overflow-wrap:anywhere;}
+.back-link {font-size:.85rem;color:var(--ink-2);}
+header {margin:2rem 0 3rem;}
+h1 {font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.4;}
+.intro {font-size:1.1rem;color:var(--ink-2);margin-top:1.2rem;line-height:1.8;}
+.reading-path {display:grid;gap:.6rem;border-block:1px solid var(--rule);padding:1.4rem 0;margin-bottom:2.75rem;}
+.reading-path a {font-size:.85rem;color:var(--ink-2);text-decoration:none;}
+.reading-path span {font-family:var(--font-mono);font-size:.7rem;color:var(--ink-3);margin-right:1rem;}
+section {padding:0 0 2rem;scroll-margin-top:6rem;}
+h2 {font-size:1.25rem;line-height:1.5;margin-bottom:1rem;}
+section p {line-height:2;color:var(--ink-2);margin:0 0 1rem;}
+footer {border-top:1px solid var(--rule);padding-top:1.5rem;display:grid;gap:.6rem;}
+footer span {font-size:.75rem;color:var(--ink-3);}
+footer a {color:var(--ink);text-decoration:none;}
+</style>

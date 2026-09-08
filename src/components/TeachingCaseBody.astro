@@ -1,0 +1,21 @@
+---
+import type { Lang } from '../data/site';
+import { teachingCase as c } from '../data/teachingCase';
+interface Props {lang:Lang}
+const {lang}=Astro.props;
+const zh=lang==='zh';
+const base=import.meta.env.BASE_URL;
+const repo='https://github.com/1llusion-ai/ds-course-agent';
+---
+<section class="case-sec"><h2 class="case-sec-title"><span class="idx">01</span>{zh?'从课程问题到个性化答疑':'From course questions to personalized help'}</h2><div class="case-sec-body"><p>{c.background[lang]}</p></div><figure><a href={`${base}images/teaching-hero-chat.png`} target="_blank" rel="noopener"><img src={`${base}images/teaching-hero-chat.png`} width="1600" height="1000" alt={c.chatCaption[lang]} /></a><figcaption>{c.chatCaption[lang]}</figcaption></figure></section>
+<section class="case-sec"><h2 class="case-sec-title"><span class="idx">02</span>{zh?'系统如何处理一次提问':'How a question moves through the system'}</h2><figure><a href={`${base}images/teaching-architecture-${lang}.svg`} target="_blank" rel="noopener"><img src={`${base}images/teaching-architecture-${lang}.svg`} width="1600" height="1050" alt={zh?'教学 Agent 架构：请求与策略、教材检索与教学能力、回答生成和学习画像反馈':'Teaching Agent architecture: request policy, retrieval and teaching capabilities, response generation and learner-state feedback'} /></a><figcaption>{zh?'系统架构与学习状态反馈 · 点击查看矢量原图':'System architecture and learner-state feedback · Open vector diagram'}</figcaption></figure><div class="case-sec-body">{c.designs.map(d=><div class="design"><h3>{d.title[lang]}</h3><p>{d.body[lang]}</p></div>)}</div></section>
+<section class="case-sec"><h2 class="case-sec-title"><span class="idx">03</span>{zh?'让学习状态可见':'Make learning state visible'}</h2><figure><a href={`${base}images/teaching-student-profile.png`} target="_blank" rel="noopener"><img src={`${base}images/teaching-student-profile.png`} width="1600" height="1000" loading="lazy" alt={c.profileCaption[lang]} /></a><figcaption>{c.profileCaption[lang]}</figcaption></figure></section>
+<section class="case-sec"><h2 class="case-sec-title"><span class="idx">04</span>{zh?'验证与性能优化':'Evaluation and performance'}</h2><div class="teaching-metrics">{c.metrics.map(m=><div><strong>{m.value}</strong><h3>{m.label[lang]}</h3><p>{m.detail[lang]}</p></div>)}</div><div class="case-sec-body"><p>{c.validation[lang]}</p></div></section>
+<section class="case-sec"><h2 class="case-sec-title"><span class="idx">05</span>{zh?'正在重构：统一学习问答路径':'In progress: unify the learning-answer path'}</h2><div class="case-sec-body"><p>{c.refactor[lang]}</p><p>{c.next[lang]}</p><div class="source-links"><a href={repo} target="_blank" rel="noopener">{zh?'项目源码':'Source code'} ↗</a><a href={`${repo}/tree/refactor/learning-routing-convergence`} target="_blank" rel="noopener">{zh?'路由重构分支':'Routing refactor'} ↗</a></div></div></section>
+<style>
+figure {margin:0;} img {width:100%;height:auto;display:block;border:1px solid var(--rule); } figure a {cursor:zoom-in;} figcaption {font-size:.85rem;color:var(--ink-2);margin-top:.75rem;}
+h3 {font-size:1.1rem;line-height:1.6;margin:0 0 .6rem;}.design+.design {margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--rule);}
+.teaching-flow {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-bottom:1rem;}.teaching-flow li {border-top:2px solid var(--cobalt);padding:.8rem 0;font-size:.9rem;}.teaching-flow span {display:block;color:var(--cobalt);font-size:.75rem;margin-bottom:.5rem;}
+.teaching-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.4rem;}.teaching-metrics>div {border-top:2px solid var(--cobalt);padding-top:1rem;}.teaching-metrics strong {font-size:clamp(1.3rem,2.3vw,1.8rem);color:var(--cobalt);font-variant-numeric:tabular-nums;}.teaching-metrics h3 {font-size:.9rem;margin-top:.6rem;}.teaching-metrics p {font-size:.85rem;color:var(--ink-2);}.source-links {display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:1.5rem;}
+@media(max-width:650px){.teaching-flow{grid-template-columns:repeat(2,minmax(0,1fr));}.teaching-metrics{grid-template-columns:1fr;}}
+</style>

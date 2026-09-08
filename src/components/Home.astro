@@ -1,10 +1,11 @@
 ---
-import { global, sections, approach, about, cta, identity, projects } from '../data/site';
+import { sections, approach, about, cta, identity, projects } from '../data/site';
 import type { Lang } from '../data/site';
-import { anchor } from '../lib/lang';
+import { notes } from '../data/notes';
+import SelectedProject from './SelectedProject.astro';
+import { anchor, notesPath } from '../lib/lang';
 import HeroRecord from './HeroRecord.astro';
 import SectionHead from './SectionHead.astro';
-import WorkCard from './WorkCard.astro';
 
 interface Props {
   lang: Lang;
@@ -60,15 +61,16 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
       note={S.work.note[lang]}
     />
     <div class="work-list" data-reveal>
-      <WorkCard project={projects[0]} lang={lang} featured />
-      <ol class="work-rows">
-        {projects.slice(1).map((p) => (
-          <li>
-            <WorkCard project={p} lang={lang} />
-          </li>
-        ))}
-      </ol>
+      {projects.map((project,position)=><SelectedProject project={project} lang={lang} position={position}/>)}
     </div>
+  </div>
+</section>
+
+<section class="section" id="notes">
+  <div class="container">
+    <SectionHead index="02" eyebrow={lang === 'zh' ? '实践记录' : 'Field notes'} title={lang === 'zh' ? '工程笔记' : 'Engineering notes'} note={lang === 'zh' ? '记录项目中的问题、排查过程与解决方法。' : 'Problems encountered, investigations and fixes from project work.'} />
+    <div class="notes-preview-list">{notes.map(n => <a class="note-preview" href={notesPath(lang, n.slug)}><span class="mono">{n.index} / {n.domain[lang]}</span><h3>{n.title[lang]}</h3><p>{n.oneLiner[lang]}</p><span>{lang === 'zh' ? '阅读笔记' : 'Read note'} →</span></a>)}</div>
+    <p class="notes-all"><a href={notesPath(lang)}>{lang === 'zh' ? '全部工程笔记' : 'All engineering notes'} →</a></p>
   </div>
 </section>
 
@@ -76,7 +78,7 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
 <section class="section" id="approach" aria-label={S.approach.title[lang]}>
   <div class="container">
     <SectionHead
-      index={S.approach.index}
+      index="03"
       eyebrow={S.approach.eyebrow[lang]}
       title={S.approach.title[lang]}
       note={S.approach.note[lang]}
@@ -98,39 +100,14 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
   <div class="container">
     <div class="about-grid">
       <SectionHead
-        index={S.about.index}
+        index="04"
         eyebrow={S.about.eyebrow[lang]}
         title={S.about.title[lang]}
       />
       <div class="about-body" data-reveal>
-        <p class="about-bio">{about.bio[lang]}</p>
-        <ul class="role-tags">
-          {about.roleTags[lang].map((t) => <li>{t}</li>)}
-        </ul>
-        <p class="about-pub">{about.publication[lang]}</p>
-        <div class="about-links">
-          <a href={identity.github} target="_blank" rel="noopener">
-            {about.githubLabel[lang]} ↗
-          </a>
-          <a href={`mailto:${identity.email}`}>{identity.email}</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 · Contact -->
-<section class="section" id="contact" aria-label={S.contact.title[lang]}>
-  <div class="container">
-    <div class="contact-box" data-reveal>
-      <p class="sec-eyebrow">{S.contact.eyebrow[lang]}</p>
-      <h2>{S.contact.title[lang]}</h2>
-      <p class="contact-avail">{global.availability[lang]}</p>
-      <div class="contact-cta">
-        <a class="btn btn--primary" href={`mailto:${identity.email}`}>{identity.email}</a>
-        <a class="btn btn--ghost" href={identity.github} target="_blank" rel="noopener">
-          {cta.github[lang]} ↗
-        </a>
+          <svg class="logo-filter-defs" aria-hidden="true" width="0" height="0"><defs><filter id="remove-logo-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 3"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs></svg>
+          <div class="profile-row"><h3>{lang === 'zh' ? '教育背景' : 'Education'}</h3><div class="profile-entries">{about.education.map(e=><div class="organization"><img class="organization-logo" src={e.logo} alt="" width="48" height="48" loading="lazy"/><div><h4>{e.school[lang]}</h4><p>{e.degree[lang]}</p>{e.detail[lang] && <p class="profile-meta">{e.detail[lang]}</p>}</div></div>)}</div></div>
+          <div class="profile-row"><h3>{lang === 'zh' ? '实习经历' : 'Experience'}</h3><div class="organization"><img class="organization-logo" src="/images/organizations/xiaomi.ico" alt="" width="48" height="48" loading="lazy"/><div><h4>{about.internship.title[lang]}</h4><p>{about.internship.team[lang]}</p><p class="profile-meta">{about.internship.period[lang]}</p></div></div></div>
       </div>
     </div>
   </div>

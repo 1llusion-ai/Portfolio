@@ -7,6 +7,12 @@ import DiagramMemory from './diagrams/DiagramMemory.astro';
 import DiagramFaultTree from './diagrams/DiagramFaultTree.astro';
 import DiagramComparison from './diagrams/DiagramComparison.astro';
 import DiagramLoop from './diagrams/DiagramLoop.astro';
+import AgentCaseBody from './AgentCaseBody.astro';
+import TeachingCaseBody from './TeachingCaseBody.astro';
+import { teachingCase } from '../data/teachingCase';
+import EmbeddingCaseBody from './EmbeddingCaseBody.astro';
+import { embeddingCase } from '../data/embeddingCase';
+import { agentCase } from '../data/agentCase';
 
 interface Props {
   project: Project;
@@ -19,10 +25,13 @@ const d = project.detail;
 const L = detailLabels;
 const idx = (n: number) => String(n).padStart(2, '0');
 const nextLabel = cta.nextCase[lang];
+const isAgentCase = project.slug === 'agentic-model-iteration';
+const isTeachingCase = project.slug === 'evidence-grounded-learning-agent';
+const isEmbeddingCase = project.slug === 'task-aware-embedding-finetuning';
 ---
 
-<article class="case">
-  <div class="container case-grid">
+<article class:list={["case", { "case--edited": isAgentCase || isEmbeddingCase || isTeachingCase }]}>
+  <div class:list={['container', 'case-grid', { 'case-grid--agent': isAgentCase || isEmbeddingCase || isTeachingCase }]}>
     <a class="case-back" href={anchor('work', lang)}>← {cta.backToWork[lang]}</a>
 
     <header class={`case-head case-head--${project.index}`}>
@@ -33,9 +42,12 @@ const nextLabel = cta.nextCase[lang];
       <ul class="case-tags">
         {project.tags[lang].map((t) => <li>{t}</li>)}
       </ul>
-      <p class="case-status mono">{safety.stampSanitized} · {safety.stampPending}</p>
+      {isAgentCase && <div class="agent-role"><p class="eyebrow mono">{agentCase.roleLabel[lang]}</p><p>{agentCase.role[lang]}</p></div>}
+      {isEmbeddingCase && <div class="embedding-role"><p class="eyebrow">{lang === 'zh' ? '我的职责' : 'My role'}</p><p>{embeddingCase.role[lang]}</p></div>}
+      {isTeachingCase && <div class="embedding-role"><p class="eyebrow">{lang === 'zh' ? '我的职责' : 'My role'}</p><p>{teachingCase.role[lang]}</p></div>}
     </header>
 
+    {isAgentCase ? <AgentCaseBody lang={lang} /> : isEmbeddingCase ? <EmbeddingCaseBody lang={lang} /> : isTeachingCase ? <TeachingCaseBody lang={lang} /> : <>
     <section class="case-sec" id="problem">
       <h2 class="case-sec-title"><span class="idx">{idx(1)}</span>{L.problem[lang]}</h2>
       <div class="case-sec-body"><p>{d.problem[lang]}</p></div>
@@ -80,7 +92,6 @@ const nextLabel = cta.nextCase[lang];
       <h2 class="case-sec-title"><span class="idx">{idx(4)}</span>{L.validation[lang]}</h2>
       <div class="case-sec-body">
         <p>{d.validation[lang]}</p>
-        <p class="metrics-pending mono">{safety.metricsPending[lang]}</p>
       </div>
     </section>
 
@@ -107,6 +118,7 @@ const nextLabel = cta.nextCase[lang];
       <p>{safety.disclosure[lang]}</p>
       <p class="disclosure-detail">{sanitizedNote[lang]}</p>
     </aside>
+    </>}
 
     <nav class="case-next" aria-label={nextLabel}>
       <a href={projectPath(lang, next.slug)}>
@@ -117,3 +129,15 @@ const nextLabel = cta.nextCase[lang];
     </nav>
   </div>
 </article>
+
+<style>
+  .case-grid--agent { max-width: 1140px; }
+  .agent-role { max-width: 760px; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid rgba(255,255,255,.25); }
+  .agent-role .eyebrow { margin-bottom: .5rem; }
+  .agent-role > p:last-child { font-size: var(--text-sm); line-height: 1.85; color: var(--ink-2); }
+  .case-head--02 .case-title { max-width: 24ch; }
+  .embedding-role { max-width: 760px; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid currentColor; }
+  .embedding-role .eyebrow { margin-bottom: .5rem; }
+  .embedding-role > p { font-size: var(--text-sm); line-height: 1.85; }
+  .embedding-role .embedding-status { margin: 1rem 0 0; font-size: .8rem; font-weight: 500; }
+</style>

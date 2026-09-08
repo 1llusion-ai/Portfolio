@@ -1,0 +1,59 @@
+---
+import { agentCase as copy } from '../data/agentCase';
+import type { Lang } from '../data/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const diagram = `${import.meta.env.BASE_URL}images/agent-iteration-overview-${lang}.svg`;
+---
+
+<section class="case-sec" id="problem">
+  <h2 class="case-sec-title"><span class="idx">01</span>{copy.background.title[lang]}</h2>
+  <div class="case-sec-body"><p>{copy.background.body[lang]}</p><ul>{copy.background.points.map(p => <li>{p[lang]}</li>)}</ul></div>
+</section>
+
+<section class="case-sec" id="mechanism">
+  <h2 class="case-sec-title"><span class="idx">02</span>{copy.workflow.title[lang]}</h2>
+  <div class="case-sec-body"><p>{copy.workflow.body[lang]}</p></div>
+  <figure class="agent-overview">
+    <a href={diagram} target="_blank" rel="noopener">
+      <img src={diagram} width="1600" height="1200" alt={copy.workflow.alt[lang]} loading="lazy" />
+    </a>
+  </figure>
+  <div class="case-sec-body routes"><ul>{copy.workflow.routes.map(p => <li>{p[lang]}</li>)}</ul><p>{copy.workflow.delivery[lang]}</p></div>
+</section>
+
+<section class="case-sec" id="design">
+  <h2 class="case-sec-title"><span class="idx">03</span>{copy.designTitle[lang]}</h2>
+  <div class="case-sec-body">{copy.designs.map(d => <div class="design-point"><h3>{d.title[lang]}</h3><p>{d.body[lang]}</p></div>)}</div>
+</section>
+
+<section class="case-sec" id="validation">
+  <h2 class="case-sec-title"><span class="idx">04</span>{copy.validation.title[lang]}</h2>
+  <div class="case-sec-body">
+    <div class="result-grid">{copy.validation.results.map(r => <div class="result"><strong>{r.value}</strong><h3>{r.label[lang]}</h3><p>{r.context[lang]}</p></div>)}</div>
+    <p>{copy.validation.body[lang]}</p><ul>{copy.validation.points.map(p => <li>{p[lang]}</li>)}</ul><p>{copy.validation.operational[lang]}</p>
+  </div>
+</section>
+
+<section class="case-sec" id="tradeoffs">
+  <h2 class="case-sec-title"><span class="idx">05</span>{copy.tradeoffs.title[lang]}</h2>
+  <div class="case-sec-body"><p>{copy.tradeoffs.body[lang]}</p><p>{copy.tradeoffs.next[lang]}</p></div>
+</section>
+
+<style>
+  .agent-overview { grid-column: 1 / -1; min-width: 0; margin: 1.5rem 0 0; }
+  .agent-overview img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+  .agent-overview > a { display: block; cursor: zoom-in; }
+  .routes { grid-column: 2; }
+  ul { list-style: disc; padding-left: 1.25rem; margin: 1rem 0 0; }
+  li { margin-bottom: .7rem; line-height: 1.8; }
+  .design-point + .design-point { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 1.5rem; }
+  h3 { font-family: var(--font-sans); font-size: var(--text-lg); margin-bottom: .75rem; }
+  .result-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; margin-bottom: 1.75rem; }
+  .result { border-top: 3px solid var(--cobalt); padding-top: 1rem; }
+  .result strong { display: block; font: 600 clamp(1.8rem,3vw,2.4rem)/1.3 var(--font-sans); color: var(--cobalt); font-variant-numeric: tabular-nums; }
+  .result h3 { font-size: 1rem; margin: .6rem 0; }
+  .result p { font-size: .875rem; }
+  @media (max-width: 480px) { .result-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 719px) { .routes { grid-column: 1 / -1; } }
+</style>

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">Agent-driven iteration for IoT control models</title>
+<desc id="desc">Three task routes connect agent coordination, diagnosis, sample validation, incremental training, quality decisions, full retraining, model deployment and Feishu reporting. Failed full evaluations return to diagnosis. Rules, run state and reusable experience support the process.</desc>
+<defs>
+ <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#2f4d8f" /></marker>
+ <marker id="retry" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#a46442" /></marker>
+ <style>
+ text{font-family:'Microsoft YaHei','Noto Sans SC',sans-serif;fill:#1e211d}
+ .eyebrow{font-size:15px;letter-spacing:3px;fill:#2f4d8f}
+ .heading{font-size:21px;font-weight:700}
+ .body{font-size:17px;fill:#4a5047}
+ .small{font-size:15px;fill:#6d7469}
+ .num{font-size:15px;fill:#2f4d8f;font-weight:700}
+ .line{fill:none;stroke:#2f4d8f;stroke-width:2;marker-end:url(#arrow)}
+ .card{fill:#fff;stroke:#d6dcd0;stroke-width:1.4}
+
+.heading{font-size:18px}.body{font-size:15px}.small{font-size:13px}.eyebrow{font-size:13px;letter-spacing:1.8px}</style>
+</defs>
+<rect width="1600" height="1200" fill="#f5f6f2" />
+<text x="60" y="48" class="eyebrow">PROJECT 01 / SYSTEM OVERVIEW</text>
+<text x="60" y="103" font-size="38" font-weight="700">Agent-driven iteration for IoT control models</text>
+<text x="60" y="138" class="body">Connect diagnosis, training, evaluation and deployment with traceable state and reusable experience.</text>
+<text x="1540" y="49" text-anchor="end" class="small">WORKFLOW / 01</text>
+
+<rect x="60" y="177" width="460" height="140" class="card" rx="5" />
+<text x="82" y="209" class="num">A / TARGETED REPAIR</text>
+<text x="82" y="241" class="heading">Production errors / requirements</text>
+<text x="82" y="275" class="body">Extract the request, device context and expected action</text>
+<text x="82" y="300" class="small">Diagnose the error and choose a repair strategy</text>
+<rect x="540" y="177" width="460" height="140" class="card" rx="5" />
+<text x="562" y="209" class="num">B / BATCH EVALUATION</text>
+<text x="562" y="241" class="heading">Batch validation data</text>
+<text x="562" y="275" class="body">Validate data → evaluate the current model baseline</text>
+<text x="562" y="300" class="small">Eval only: report and finish. Improvement: diagnose failures.</text>
+<rect x="1020" y="177" width="520" height="140" class="card" rx="5" />
+<text x="1042" y="209" class="num">C / NEW CAPABILITIES</text>
+<text x="1042" y="241" class="heading">New device categories / features</text>
+<text x="1042" y="275" class="body">Archive full specs and samples → baseline → diagnose each case</text>
+<text x="1042" y="300" class="small">Train model errors only; fix data or evaluation errors first</text>
+<path d="M290 317V347M770 317V347M1280 317V347" fill="none" stroke="#2f4d8f" stroke-width="2" />
+<rect x="60" y="347" width="1480" height="82" rx="5" fill="#2f4d8f" />
+<text x="83" y="382" style="fill:white;font-size:22px;font-weight:700">Primary agent · Claude Code</text>
+<text x="83" y="410" style="fill:#e4e9f4;font-size:15px">Route selection / decisions / monitoring / memory</text>
+<path d="M520 371V407" stroke="#8295bd" />
+<text x="548" y="382" style="fill:white;font-size:20px;font-weight:700">Delegate tasks; collect conclusions and artifacts</text>
+<text x="548" y="410" style="fill:#e4e9f4;font-size:16px">Documents and rules · Data analysis · Samples | Keep decision context focused</text>
+
+<text x="60" y="470" class="eyebrow">WHEN REPAIR IS NEEDED / EXECUTION FLOW</text>
+<text x="1540" y="470" text-anchor="end" class="small">Controlled scripts connect data and training platforms; workflows run serially</text>
+<rect x="60" y="493" width="190" height="137" class="card" rx="5" />
+<text x="78" y="520" class="num">01 / DIAGNOSE</text><text x="78" y="555" class="heading" style="font-size:15px;font-weight:700">Diagnosis &amp; strategy</text><text x="78" y="587" class="body" style="font-size:14px;fill:#4a5047">Check rules and failures</text><text x="78" y="612" class="small">Output: repair conclusions</text>
+<rect x="280" y="493" width="190" height="137" class="card" rx="5" />
+<text x="298" y="520" class="num">02 / PREPARE</text><text x="298" y="555" class="heading" style="font-size:15px;font-weight:700">Prepare &amp; validate</text><text x="298" y="587" class="body" style="font-size:14px;fill:#4a5047">CSV → checks → JSONL</text><text x="298" y="612" class="small">Output: validated data</text>
+<rect x="500" y="493" width="190" height="137" class="card" rx="5" />
+<text x="518" y="520" class="num">03 / FIX</text><text x="518" y="555" class="heading" style="font-size:15px;font-weight:700">Incremental training</text><text x="518" y="587" class="body" style="font-size:14px;fill:#4a5047">Upload version → train</text><text x="518" y="612" class="small">Output: candidate model</text>
+<rect x="720" y="493" width="190" height="137" class="card" rx="5" />
+<text x="738" y="520" class="num">04 / EVALUATE</text><text x="738" y="555" class="heading" style="font-size:15px;font-weight:700">Evaluate &amp; compare</text><text x="738" y="587" class="body" style="font-size:14px;fill:#4a5047">Repairs + regressions</text><text x="738" y="612" class="small">Output: metrics and failures</text>
+<rect x="940" y="493" width="230" height="137" rx="5" fill="#eef1d8" stroke="#a3b51f" stroke-width="1.5" />
+<text x="958" y="520" class="num">05 / DECIDE</text><text x="958" y="555" class="heading">Quality decision</text><text x="958" y="587" class="body">Apply route-specific criteria</text><text x="958" y="612" class="small">Pass / review / repair again</text>
+<rect x="1220" y="493" width="320" height="137" class="card" rx="5" />
+<text x="1238" y="520" class="num">06 / FULL</text><text x="1238" y="555" class="heading">Full retraining &amp; evaluation</text><text x="1238" y="587" class="body">Merge validated fixes with base data</text><text x="1238" y="612" class="small">Output: training artifacts and evaluation report</text>
+<text x="1195" y="549" font-size="12" text-anchor="middle" fill="#5f710c">PASS</text>
+<path d="M1055 630V682H155V632" fill="none" stroke="#a46442" stroke-width="2" marker-end="url(#retry)" />
+<rect x="310" y="666" width="560" height="30" fill="#f5f6f2" />
+<text x="590" y="687" text-anchor="middle" style="fill:#995a38;font-size:15px">Below target: record the cause and next strategy; diagnose again</text>
+<text x="1090" y="714" class="small">Full eval: pass → deploy; fail → diagnose</text>
+
+<g transform="translate(0 120)">
+<path d="M60 725H1540" stroke="#d6dcd0" />
+<text x="60" y="762" class="eyebrow">THROUGHOUT THE WORKFLOW / RULES, STATE AND EXPERIENCE</text>
+<rect x="60" y="788" width="460" height="165" class="card" rx="5" />
+<text x="83" y="824" class="heading">Business rules · What is correct</text>
+<text x="83" y="859" class="body">Human-maintained device specifications and product rules</text>
+<text x="83" y="889" class="body">Read on demand during diagnosis and sample preparation</text>
+<text x="83" y="930" class="small">Kept separate so repair experience cannot replace product rules</text>
+<rect x="540" y="788" width="460" height="165" class="card" rx="5" />
+<text x="563" y="824" class="heading">Short-term memory · Run progress</text>
+<text x="563" y="859" class="body">Versioned state, evaluation records and diagnostic logs</text>
+<text x="563" y="889" class="body">Resume an existing execution after interruption</text>
+<text x="563" y="930" class="small" style="font-size:12px;fill:#6d7469">Validation manifests + execution locks prevent stale data and duplicates</text>
+<rect x="1020" y="788" width="520" height="165" rx="5" fill="#e8ecf4" stroke="#cbd4e5" />
+<text x="1043" y="824" class="heading">Long-term memory · Reusable lessons</text>
+<text x="1043" y="859" class="body">Save after evaluation passes and corrected understanding is stable</text>
+<text x="1043" y="889" class="body">Load a compact index; expand matching entries on demand</text>
+<text x="1043" y="930" class="small">Reuse validated strategies and known pitfalls in future diagnoses</text>
+<path d="M1280 953V983H36V560H57" fill="none" stroke="#7c8faf" stroke-width="1.6" stroke-dasharray="6 6" marker-end="url(#arrow)" />
+<rect x="658" y="969" width="250" height="26" fill="#f5f6f2" />
+<text x="783" y="988" text-anchor="middle" class="small">Validated experience informs future tasks</text>
+<text x="60" y="1041" class="small">Architecture overview · Describes the mechanism, not measured performance or production deployment</text>
+<text x="1540" y="1041" text-anchor="end" class="eyebrow">IOT SKILL LOOP</text>
+</g>
+<path d="M1380 630V651H1190V682H1055" fill="none" stroke="#a46442" stroke-width="2" marker-end="url(#retry)" />
+<path d="M1380 630V735" class="line" />
+<rect x="1090" y="738" width="450" height="90" rx="5" fill="#eef1d8" stroke="#a3b51f" />
+<text x="1110" y="771" class="heading">07 / Model deployment</text>
+<text x="1110" y="803" class="body">Deployment Skill runs and returns the result</text>
+<path d="M1090 783H1010" class="line" />
+<rect x="540" y="738" width="460" height="90" rx="5" class="card" />
+<text x="560" y="771" class="heading">08 / Feishu report and handoff</text>
+<text x="560" y="803" class="body">Return evaluation and deployment results</text>
+<path d="M250 562H278" class="line" /><path d="M470 562H498" class="line" /><path d="M690 562H718" class="line" /><path d="M910 562H938" class="line" /><path d="M1170 562H1218" class="line" /></svg>

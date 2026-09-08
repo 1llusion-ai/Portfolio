@@ -1,46 +1,25 @@
 ---
-import { identity, global, safety, nav, cta } from '../data/site';
+import { identity, cta } from '../data/site';
 import type { Lang } from '../data/site';
-import { homePath, switchPath } from '../lib/lang';
-import Mark from './Mark.astro';
-
-interface Props {
-  lang: Lang;
-  pathname: string;
-  /** On the 404 page, the language switch resolves to the other locale's home. */
-  isNotFound?: boolean;
-}
-const { lang, pathname, isNotFound = false } = Astro.props;
-const other = lang === 'zh' ? 'en' : 'zh';
-const switchHref = isNotFound ? homePath(other) : switchPath(pathname, other);
-const otherLabel = lang === 'zh' ? 'English' : '中文';
-const backLabel = cta.backToTop[lang];
+import { homePath } from '../lib/lang';
+interface Props { lang: Lang; pathname: string; isNotFound?: boolean }
+const { lang } = Astro.props;
 const year = new Date().getFullYear();
 ---
-
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div>
-        <p class="footer-brand">
-          <span class="footer-brand-mark" aria-hidden="true"><Mark /></span>
-          Evidence Ledger
-        </p>
-        <p class="footer-avail">{global.availability[lang]}</p>
-        <p class="footer-disclosure">{safety.disclosure[lang]}</p>
-      </div>
-      <div class="footer-links">
-        <a href={identity.github} target="_blank" rel="noopener">
-          GitHub ↗ <span class="mono">/{identity.github.split('/').pop()}</span>
-        </a>
-        <a href={`mailto:${identity.email}`}>{identity.email}</a>
-        <a href={switchHref}>{otherLabel} / {other === 'en' ? 'EN' : '中'}</a>
-      </div>
-    </div>
-    <div class="footer-meta">
-      <span>© {year} {identity.name} · Evidence Ledger</span>
-      <span>{nav.brand}</span>
-      <a href={homePath(lang) + '#'} style="color:inherit">{backLabel} ↑</a>
-    </div>
+<footer class="personal-footer">
+  <div class="container footer-line">
+    <a class="personal-signature" href={homePath(lang)}>{lang === 'zh' ? '肖凡' : 'XiaoFan'}<span>© {year}</span></a>
+    <div class="personal-links"><a href={identity.github} target="_blank" rel="noopener">GitHub ↗</a><a href={`mailto:${identity.email}`}>{identity.email}</a></div>
+    <a class="back-top" href="#">{cta.backToTop[lang]} ↑</a>
   </div>
 </footer>
+<style>
+.personal-footer{border-top:1px solid var(--rule);padding:2rem 0;background:transparent;}
+.footer-line{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+.personal-signature{display:flex;align-items:baseline;gap:1rem;font-size:1rem;font-weight:500;color:var(--ink);text-decoration:none;}
+.personal-signature span{font-size:.75rem;font-weight:400;color:var(--ink-3);}
+.personal-links{display:flex;flex-wrap:wrap;gap:1.5rem;}
+.personal-links a,.back-top{font-size:.8rem;color:var(--ink-2);text-decoration:none;}
+a:hover{text-decoration:underline;}
+@media(max-width:600px){.footer-line{align-items:flex-start;}.personal-links{width:100%;order:3;gap:.8rem 1.3rem;}.back-top{margin-left:auto;}}
+</style>

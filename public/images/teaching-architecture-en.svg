@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1050" viewBox="0 0 1600 1050" role="img" aria-labelledby="title desc"><title id="title">Course Agent architecture</title><desc id="desc">Question routing, evidence retrieval, controlled teaching tools, answer generation and learner-memory feedback. Dashed amber panel describes the in-progress routing refactor.</desc><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#4c5c6d"/></marker></defs><style>text{font-family:'IBM Plex Sans','Noto Sans SC','Microsoft YaHei',sans-serif;fill:#253343}.title{font-size:30px;font-weight:600}.heading{font-size:21px;font-weight:600}.body{font-size:17px}.small{font-size:15px;fill:#617184}.panel{fill:#fafbfd;stroke:#ced6df;stroke-width:1.5}.edge{fill:none;stroke:#4c5c6d;stroke-width:1.8;marker-end:url(#arrow)}.feedback{fill:none;stroke:#4c5c6d;stroke-width:1.8;stroke-dasharray:7 5;marker-end:url(#arrow)}</style><rect width="1600" height="1050" fill="white"/>
+<text x="48" y="53" class="title" text-anchor="start">Course Agent: evidence-grounded, learner-aware answers</text>
+<text x="48" y="83" class="small" text-anchor="start">System architecture  /  Solid: request &amp; data flow  ·  Dashed: state feedback  ·  Amber: refactor branch</text>
+<rect x="40" y="120" width="350" height="600" rx="10" class="panel"/>
+<rect x="430" y="120" width="600" height="600" rx="10" class="panel"/>
+<rect x="1070" y="120" width="490" height="600" rx="10" class="panel"/>
+<text x="62" y="157" class="heading" text-anchor="start">(a) Request &amp; execution policy</text>
+<text x="452" y="157" class="heading" text-anchor="start">(b) Context &amp; controlled capabilities</text>
+<text x="1092" y="157" class="heading" text-anchor="start">(c) Response &amp; interaction</text>
+<rect x="65" y="185" width="300" height="105" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="218" class="heading" text-anchor="start">Student question</text>
+<text x="85" y="249" class="body" text-anchor="start">Concepts / code / learning plans</text>
+<rect x="65" y="330" width="300" height="130" rx="7" fill="#fff" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="363" class="heading" text-anchor="start">QueryPipeline</text>
+<text x="85" y="394" class="body" text-anchor="start">Preprocess, rewrite &amp; scope</text>
+<text x="85" y="420" class="body" text-anchor="start">Rules + semantic fallback</text>
+<rect x="65" y="505" width="300" height="165" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="85" y="538" class="heading" text-anchor="start">Deterministic policy</text>
+<text x="85" y="569" class="body" text-anchor="start">Retrieval &amp; execution mode</text>
+<text x="85" y="595" class="body" text-anchor="start">Bound tool access</text>
+<text x="85" y="621" class="body" text-anchor="start">Load context on demand</text>
+<path d="M215 290V330" class="edge"/>
+<path d="M215 460V505" class="edge"/>
+<rect x="465" y="185" width="530" height="130" rx="7" fill="#edf4f9" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="218" class="heading" text-anchor="start">Textbook retrieval</text>
+<text x="485" y="249" class="body" text-anchor="start">BM25 + ChromaDB → RRF</text>
+<text x="485" y="275" class="body" text-anchor="start">Page-level sources; BM25 fallback on timeout</text>
+<rect x="465" y="355" width="530" height="145" rx="7" fill="#eef5f0" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="388" class="heading" text-anchor="start">Teaching skills</text>
+<text x="485" y="419" class="body" text-anchor="start">Learning plans · Explanations · Misconceptions</text>
+<text x="485" y="445" class="body" text-anchor="start">Code review: static analysis without execution</text>
+<rect x="465" y="540" width="530" height="130" rx="7" fill="#fff" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="485" y="573" class="heading" text-anchor="start">Controlled tools</text>
+<text x="485" y="604" class="body" text-anchor="start">Schedule / opt-in web / Docker sandbox</text>
+<text x="485" y="630" class="body" text-anchor="start">Explicit execution request; no host fallback</text>
+<path d="M365 582H410V250H465" class="edge"/>
+<path d="M410 427H465" class="edge"/>
+<path d="M410 582V605H465" class="edge"/>
+<rect x="1100" y="245" width="430" height="140" rx="7" fill="#edf4f9" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="1120" y="278" class="heading" text-anchor="start">Generation &amp; grounding</text>
+<text x="1120" y="309" class="body" text-anchor="start">Combine evidence, profile &amp; tool results</text>
+<text x="1120" y="335" class="body" text-anchor="start">Guard enforces required retrieval</text>
+<path d="M995 250H1048V300H1100" class="edge"/>
+<path d="M995 427H1048V330H1100" class="edge"/>
+<path d="M995 605H1048V360H1100" class="edge"/>
+<rect x="1100" y="465" width="430" height="140" rx="7" fill="#edf3fa" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="1120" y="498" class="heading" text-anchor="start">Traceable streaming response</text>
+<text x="1120" y="529" class="body" text-anchor="start">Answer + citations + execution trace</text>
+<text x="1120" y="555" class="body" text-anchor="start">Vue 3 / SSE · Stop &amp; reconnect</text>
+<path d="M1315 385V465" class="edge"/>
+<text x="1100" y="700" class="small" text-anchor="start">FastAPI session bridge</text>
+<rect x="430" y="780" width="600" height="135" rx="7" fill="#eef5f0" stroke="#b8c6d4" stroke-width="1.6"/>
+<text x="450" y="813" class="heading" text-anchor="start">(d) Learning events → Learner profile</text>
+<text x="450" y="844" class="body" text-anchor="start">Concepts / clarification / misconceptions / mastery</text>
+<text x="450" y="870" class="body" text-anchor="start">Replayable events → focus, weak points &amp; progress</text>
+<path d="M1315 605V847H1030" class="feedback"/>
+<path d="M430 847H215V670" class="feedback"/>
+<text x="1130" y="823" class="small" text-anchor="start">Learning signals</text>
+<text x="240" y="821" class="small" text-anchor="start">Context for later turns</text>
+<rect x="40" y="953" width="1520" height="68" rx="7" fill="#fdf7eb" stroke="#bc9551" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="60" y="981" class="heading" text-anchor="start">IN PROGRESS  /  LEARNING_ANSWER</text>
+<text x="60" y="1007" class="small" text-anchor="start">Unify learning answers and remove the extra classifier call; policy retains authority. Real-model A/B remains pending.</text>
+</svg>

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">IoT 设备控制模型的 Agent 迭代闭环</title>
+<desc id="desc">三类任务分别经过前置准备，由主 Agent 决策并委派子任务。需要修复时依次诊断、构造并校验样本、增量训练、评测与质量决策，达标后进入全量重训与评测，全量评测通过后部署上线并回传飞书报告。不达标则重新诊断。业务规则、版本级状态和长期经验分别支撑工作流。</desc>
+<defs>
+ <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#2f4d8f" /></marker>
+ <marker id="retry" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#a46442" /></marker>
+ <style>
+ text{font-family:'Microsoft YaHei','Noto Sans SC',sans-serif;fill:#1e211d}
+ .eyebrow{font-size:15px;letter-spacing:3px;fill:#2f4d8f}
+ .heading{font-size:21px;font-weight:700}
+ .body{font-size:17px;fill:#4a5047}
+ .small{font-size:15px;fill:#6d7469}
+ .num{font-size:15px;fill:#2f4d8f;font-weight:700}
+ .line{fill:none;stroke:#2f4d8f;stroke-width:2;marker-end:url(#arrow)}
+ .card{fill:#fff;stroke:#d6dcd0;stroke-width:1.4}
+ </style>
+</defs>
+<rect width="1600" height="1200" fill="#f5f6f2" />
+<text x="60" y="48" class="eyebrow">PROJECT 01 / SYSTEM OVERVIEW</text>
+<text x="60" y="103" font-size="38" font-weight="700">IoT 设备控制模型的 Agent 迭代闭环</text>
+<text x="60" y="138" class="body">从问题诊断到模型部署上线，让每次迭代有依据、可追溯，并为下一次任务保留经验。</text>
+<text x="1540" y="49" text-anchor="end" class="small">系统流程 / 01</text>
+
+<rect x="60" y="177" width="460" height="140" class="card" rx="5" />
+<text x="82" y="209" class="num">A / 定点修复</text>
+<text x="82" y="241" class="heading">线上错误案例 / 产品需求</text>
+<text x="82" y="275" class="body">提取指令、设备上下文与预期动作</text>
+<text x="82" y="300" class="small">进入诊断，确定修复策略</text>
+<rect x="540" y="177" width="460" height="140" class="card" rx="5" />
+<text x="562" y="209" class="num">B / 批量评测与改进</text>
+<text x="562" y="241" class="heading">批量验证数据</text>
+<text x="562" y="275" class="body">校验数据 → 当前模型基线评测</text>
+<text x="562" y="300" class="small">仅评测：报告后结束；需改进：进入诊断</text>
+<rect x="1020" y="177" width="520" height="140" class="card" rx="5" />
+<text x="1042" y="209" class="num">C / 新能力接入</text>
+<text x="1042" y="241" class="heading">新品类 / 新功能</text>
+<text x="1042" y="275" class="body">完整规格与样本归档 → 完整基线 → 逐条归因</text>
+<text x="1042" y="300" class="small">仅模型错误进入训练；数据 / 评测错误先修正重评</text>
+<path d="M290 317V347M770 317V347M1280 317V347" fill="none" stroke="#2f4d8f" stroke-width="2" />
+<rect x="60" y="347" width="1480" height="82" rx="5" fill="#2f4d8f" />
+<text x="83" y="382" style="fill:white;font-size:22px;font-weight:700">主 Agent · Claude Code</text>
+<text x="83" y="410" style="fill:#e4e9f4;font-size:16px">任务选路 / 关键判断 / 执行监控 / 经验沉淀</text>
+<path d="M520 371V407" stroke="#8295bd" />
+<text x="548" y="382" style="fill:white;font-size:20px;font-weight:700">按任务委派子 Agent，返回结论与产物</text>
+<text x="548" y="410" style="fill:#e4e9f4;font-size:16px">文档与规则读取 · 数据分析 · 样本构造　｜　主上下文保留决策所需信息</text>
+
+<text x="60" y="470" class="eyebrow">需要修复时 / 执行主链</text>
+<text x="1540" y="470" text-anchor="end" class="small">经受控脚本调用数据流水线与训练平台；训练 / 评测工作流串行执行</text>
+<rect x="60" y="493" width="190" height="137" class="card" rx="5" />
+<text x="78" y="520" class="num">01 / DIAGNOSE</text><text x="78" y="555" class="heading">诊断与策略</text><text x="78" y="587" class="body">核对规则与错误</text><text x="78" y="612" class="small">产出：修复结论</text>
+<rect x="280" y="493" width="190" height="137" class="card" rx="5" />
+<text x="298" y="520" class="num">02 / PREPARE</text><text x="298" y="555" class="heading">样本构造与验证</text><text x="298" y="587" class="body">CSV → 校验 → JSONL</text><text x="298" y="612" class="small">产出：验证后的数据</text>
+<rect x="500" y="493" width="190" height="137" class="card" rx="5" />
+<text x="518" y="520" class="num">03 / FIX</text><text x="518" y="555" class="heading">增量修复训练</text><text x="518" y="587" class="body">版本上传 → 训练</text><text x="518" y="612" class="small">产出：候选模型</text>
+<rect x="720" y="493" width="190" height="137" class="card" rx="5" />
+<text x="738" y="520" class="num">04 / EVALUATE</text><text x="738" y="555" class="heading">评测与基线对比</text><text x="738" y="587" class="body">修复效果 + 能力回归</text><text x="738" y="612" class="small">产出：指标与失败项</text>
+<rect x="940" y="493" width="230" height="137" rx="5" fill="#eef1d8" stroke="#a3b51f" stroke-width="1.5" />
+<text x="958" y="520" class="num">05 / DECIDE</text><text x="958" y="555" class="heading">结构化质量决策</text><text x="958" y="587" class="body">按路线判断是否达标</text><text x="958" y="612" class="small">通过 / 需复核 / 继续修复</text>
+<rect x="1220" y="493" width="320" height="137" class="card" rx="5" />
+<text x="1238" y="520" class="num">06 / FULL</text><text x="1238" y="555" class="heading">全量重训与评测</text><text x="1238" y="587" class="body">合并通过的修复数据与基座数据</text><text x="1238" y="612" class="small">产出：全量训练产物与评测报告</text>
+<text x="1195" y="549" font-size="12" text-anchor="middle" fill="#5f710c">达标</text>
+<path d="M1055 630V682H155V632" fill="none" stroke="#a46442" stroke-width="2" marker-end="url(#retry)" />
+<rect x="340" y="666" width="500" height="30" fill="#f5f6f2" />
+<text x="590" y="687" text-anchor="middle" style="fill:#995a38;font-size:17px">未达标：记录失败原因与下一轮策略，返回诊断</text>
+<text x="1090" y="714" class="small">全量评测通过后上线；未通过则返回诊断</text>
+
+<g transform="translate(0 120)">
+<path d="M60 725H1540" stroke="#d6dcd0" />
+<text x="60" y="762" class="eyebrow">贯穿全程 / 规则、状态与经验</text>
+<rect x="60" y="788" width="460" height="165" class="card" rx="5" />
+<text x="83" y="824" class="heading">业务规则 · 什么是正确的</text>
+<text x="83" y="859" class="body">人工维护的设备规范与产品规则</text>
+<text x="83" y="889" class="body">诊断与样本生成时按需读取</text>
+<text x="83" y="930" class="small">独立于经验库，避免修复经验覆盖产品规范</text>
+<rect x="540" y="788" width="460" height="165" class="card" rx="5" />
+<text x="563" y="824" class="heading">短期记忆 · 这轮进行到哪里</text>
+<text x="563" y="859" class="body">按版本保存状态、评测记录与诊断日志</text>
+<text x="563" y="889" class="body">中断后读取 execution，继续已有任务</text>
+<text x="563" y="930" class="small">校验清单 + 执行锁，防止陈旧数据与重复提交</text>
+<rect x="1020" y="788" width="520" height="165" rx="5" fill="#e8ecf4" stroke="#cbd4e5" />
+<text x="1043" y="824" class="heading">长期记忆 · 哪些经验值得复用</text>
+<text x="1043" y="859" class="body">评测通过、纠正后的理解稳定，再沉淀经验</text>
+<text x="1043" y="889" class="body">会话加载精简索引，匹配后展开经验正文</text>
+<text x="1043" y="930" class="small">返回下一次诊断，复用经验证的策略与历史陷阱</text>
+<path d="M1280 953V983H36V560H57" fill="none" stroke="#7c8faf" stroke-width="1.6" stroke-dasharray="6 6" marker-end="url(#arrow)" />
+<rect x="658" y="969" width="250" height="26" fill="#f5f6f2" />
+<text x="783" y="988" text-anchor="middle" class="small">经验证的经验用于后续任务</text>
+<text x="60" y="1041" class="small">系统机制示意 · 展示任务执行与反馈关系，不代表实际运行指标或上线结果</text>
+<text x="1540" y="1041" text-anchor="end" class="eyebrow">IOT SKILL LOOP</text>
+</g>
+<path d="M1380 630V651H1190V682H1055" fill="none" stroke="#a46442" stroke-width="2" marker-end="url(#retry)" />
+<path d="M1380 630V735" class="line" />
+<rect x="1090" y="738" width="450" height="90" rx="5" fill="#eef1d8" stroke="#a3b51f" />
+<text x="1110" y="771" class="heading">07 / 模型部署上线</text>
+<text x="1110" y="803" class="body">部署 Skill 自动执行，返回部署结果</text>
+<path d="M1090 783H1010" class="line" />
+<rect x="540" y="738" width="460" height="90" rx="5" class="card" />
+<text x="560" y="771" class="heading">08 / 飞书报告与结果回传</text>
+<text x="560" y="803" class="body">汇总评测与部署结果，回传任务发起方</text>
+<path d="M250 562H278" class="line" /><path d="M470 562H498" class="line" /><path d="M690 562H718" class="line" /><path d="M910 562H938" class="line" /><path d="M1170 562H1218" class="line" /></svg>

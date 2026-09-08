@@ -1,0 +1,60 @@
+---
+import type { Lang, Project } from '../data/site';
+import { agentCase } from '../data/agentCase';
+import { embeddingScores } from '../data/embeddingCase';
+import { projectPath } from '../lib/lang';
+interface Props { lang: Lang; project: Project; position: number }
+const {lang,project,position}=Astro.props;
+const zh=lang==='zh';
+const teaching=zh ? [['01','教材检索','混合检索课程材料，为回答提供可追溯的引用。'],['02','学习画像','积累学习事件，将进度与薄弱点带入后续对话。'],['03','讲解与工具','结合学习状态组织回答，按需调用受控工具。']] : [['01','Course retrieval','Hybrid retrieval grounds answers in traceable course sources.'],['02','Learner profile','Learning events carry progress and weak points into later conversations.'],['03','Explanations & tools','Adapt answers to learner state and invoke controlled tools when needed.']];
+---
+<article class="case-entry">
+  <div class="case-intro">
+    <p class="case-kicker"><span>{project.index}</span>{project.domain[lang]}</p>
+    <h3><a href={projectPath(lang,project.slug)}>{project.title[lang]}</a></h3>
+    <p class="case-description">{project.oneLiner[lang]}</p>
+    {position===2 && <p class="case-outcome">{project.outcome?.[lang]}</p>}
+    <div class="case-links"><a href={projectPath(lang,project.slug)}>{zh?'阅读项目':'Read case study'} <span>↗</span></a>{position===2 && <a href={project.source} target="_blank" rel="noopener">{zh?'公开源码':'Source code'} <span>↗</span></a>}</div>
+  </div>
+  <div class="case-evidence">
+    {position===0 && <><p class="evidence-heading">{zh?'从问题诊断到模型上线':'From diagnosis to deployment'}</p><dl class="result-grid">{agentCase.validation.results.map(r=><div><dt>{r.label[lang]}</dt><dd>{r.value}</dd></div>)}</dl><ol class="iteration-line">{(zh?['诊断','数据构造','训练评测','部署上线']:['Diagnose','Build data','Train & evaluate','Deploy']).map(s=><li>{s}</li>)}</ol></>}
+    {position===1 && <><p class="evidence-heading">{zh?'训练策略如何影响检索结果':'How training strategy shapes retrieval'}</p><div class="score-table"><div class="score-head"><span>{zh?'训练策略':'Strategy'}</span><span>{zh?'功能点过滤':'Function'}</span><span>{zh?'严格 few-shot':'Strict few-shot'}</span></div>{embeddingScores.map(r=><div class:list={['score-row',{best:r.name==='Hybrid'}]}><strong>{r.name}</strong><span>{r.functionHit.toFixed(2)}<small>%</small></span><span>{r.strictHit.toFixed(2)}<small>%</small></span></div>)}</div><p class="evidence-foot">{zh?'Hit@1 · 全量自检索 · 42,794 条候选':'Hit@1 · Full self-retrieval · 42,794 candidates'}</p></>}
+    {position===2 && <><p class="evidence-heading">{zh?'一次回答背后的教学机制':'The teaching system behind an answer'}</p><ol class="teaching-lines">{teaching.map(([n,title,body])=><li><span>{n}</span><div><strong>{title}</strong><p>{body}</p></div></li>)}</ol><p class="evidence-foot">{zh?'248 页教材 / 566 个语义切片 / 99.6% 页面覆盖率':'248 textbook pages / 566 chunks / 99.6% page coverage'}</p></>}
+  </div>
+</article>
+<style>
+.case-entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,5rem);padding:3.5rem 0;border-top:1px solid #ccc9c1;color:#292a27;}
+.case-intro,.case-evidence{min-width:0;}
+.case-kicker{display:flex;align-items:center;gap:1rem;color:#77756e;font-size:.75rem;letter-spacing:.04em;margin:0 0 1.6rem;}
+.case-kicker span{font-family:var(--font-mono);color:#9a563c;}
+h3{font-size:clamp(1.5rem,2.4vw,2rem);font-weight:600;line-height:1.45;margin:0 0 1.15rem;letter-spacing:-.025em;}
+h3 a{color:inherit;text-decoration:none;}
+.case-description{font-size:.95rem;line-height:1.95;color:#696960;margin:0;max-width:40ch;}
+.case-outcome{font-size:.78rem;line-height:1.8;color:#985537;margin:1rem 0 0;}
+.case-links{display:flex;gap:1.7rem;margin-top:2rem;}
+.case-links a{font-size:.85rem;color:#343630;text-decoration:none;border-bottom:1px solid #b8b8ae;padding-bottom:.35rem;}
+.case-links span{margin-left:.65rem;color:#9a563c;}
+a:hover{color:#9a563c;}
+.evidence-heading{font-size:.8rem;color:#77756e;margin:0 0 1.6rem;line-height:1.6;}
+.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem 1.5rem;margin:0;}
+.result-grid dt{font-size:.78rem;color:#73736a;}
+.result-grid dd{font-size:clamp(1.2rem,2vw,1.65rem);line-height:1.4;letter-spacing:-.045em;font-weight:500;margin:.35rem 0 0;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.iteration-line{display:flex;justify-content:space-between;gap:.6rem;margin:1.8rem 0 0;padding-top:1rem;border-top:1px solid #dedcd5;font-size:.72rem;color:#77756e;}
+.iteration-line li+li:before{content:'→';margin-right:.6rem;color:#b2afa5;}
+.score-head,.score-row{display:grid;grid-template-columns:.9fr 1fr 1.2fr;align-items:baseline;gap:.5rem;}
+.score-head{font-size:.7rem;color:#77756e;padding-bottom:.7rem;}
+.score-head span:not(:first-child),.score-row>span{text-align:right;}
+.score-row{padding:.85rem 0;border-top:1px solid #e0ded7;}
+.score-row strong{font-size:.85rem;font-weight:400;}
+.score-row>span{font-size:1.25rem;font-variant-numeric:tabular-nums;}
+.score-row small{font-size:.7rem;margin-left:.15rem;color:#89877f;}
+.score-row.best{color:#985537;}
+.score-row.best strong{font-weight:600;}
+.evidence-foot{font-size:.7rem;line-height:1.8;color:#858279;margin:1.15rem 0 0;}
+.teaching-lines{display:grid;gap:1rem;}
+.teaching-lines li{display:grid;grid-template-columns:1.5rem 1fr;gap:.7rem;padding-bottom:1rem;border-bottom:1px solid #e0ded7;}
+.teaching-lines li>span{font:400 .65rem/1.9 var(--font-mono);color:#a7a299;}
+.teaching-lines strong{font-size:.9rem;font-weight:500;}
+.teaching-lines p{font-size:.78rem;color:#77756e;line-height:1.8;margin:.2rem 0 0;}
+@media(max-width:760px){.case-entry{grid-template-columns:1fr;gap:2rem;padding:2.5rem 0;}.case-kicker{margin-bottom:1rem;}.case-description{max-width:none;}.case-links{margin-top:1.3rem;}.result-grid dd{font-size:clamp(1.1rem,4.8vw,1.6rem);}}
+</style>

@@ -1,0 +1,51 @@
+---
+import type { Lang, Project } from '../data/site';
+import { projectPath } from '../lib/lang';
+import DiagramComparison from './diagrams/DiagramComparison.astro';
+interface Props { lang: Lang; project: Project; kind: 'research' | 'product' }
+const {lang,project,kind}=Astro.props;
+const zh=lang==='zh';
+---
+<article class:list={['project-showcase', kind]}>
+  <div class="showcase-copy"><p class="eyebrow">{project.index} / {project.domain[lang]}</p><h3><a href={projectPath(lang,project.slug)}>{project.title[lang]}</a></h3><p>{project.oneLiner[lang]}</p>
+    {kind==='research' ? <p class="showcase-result">{zh?'Hybrid 严格 few-shot Hit@1：96.13%':'Hybrid strict few-shot Hit@1: 96.13%'}</p> : <p class="showcase-result">{project.outcome?.[lang]}</p>}
+    {kind==='product' && <ul class="product-capabilities">{project.steps[lang].map(step=><li>{step}</li>)}</ul>}
+    <div class="showcase-actions"><a class="showcase-link" href={projectPath(lang,project.slug)}>{zh?'查看项目':'Explore project'} →</a>{kind==='product' && <a class="source-link" href={project.source} target="_blank" rel="noopener">{zh?'公开源码':'Source code'} ↗</a>}</div>
+  </div>
+  {kind==='research' && <div class="showcase-evidence"><p class="evidence-label">{zh?'三种训练策略，两种检索任务':'Three training strategies, two retrieval tasks'}</p><DiagramComparison lang={lang}/><p class="evidence-scope">{zh?'全量自检索 · Hit@1 · 42,794 条候选':'Full self-retrieval · Hit@1 · 42,794 candidates'}</p></div>}
+  {kind==='product' && <div class="teaching-summary">
+    <p class="evidence-label">{zh?'有依据的回答，可积累的学习状态':'Grounded answers, persistent learning state'}</p>
+    <div class="context-pair"><div><span class="summary-label">{zh?'教材依据':'COURSE EVIDENCE'}</span><strong>{zh?'混合检索':'Hybrid retrieval'}</strong><p>{zh?'BM25 + 向量检索 · 来源可追溯':'BM25 + vectors · Traceable sources'}</p></div><div><span class="summary-label">{zh?'学习画像':'LEARNER PROFILE'}</span><strong>{zh?'进度与薄弱点':'Progress & weak points'}</strong><p>{zh?'学习事件积累 · 按需注入上下文':'Learning events · Context on demand'}</p></div></div>
+    <div class="summary-join" aria-hidden="true">↓</div>
+    <div class="answer-stage"><strong>{zh?'个性化讲解与工具辅助':'Personalized explanations & tools'}</strong><span>{zh?'回答附教材引用，学习信号回写画像':'Cited answers; learning signals update the profile'}</span></div>
+    <dl class="coverage"><div><dd>248</dd><dt>{zh?'教材页数':'Textbook pages'}</dt></div><div><dd>566</dd><dt>{zh?'语义切片':'Semantic chunks'}</dt></div><div><dd>99.6%</dd><dt>{zh?'页面覆盖率':'Page coverage'}</dt></div></dl>
+  </div>}
+</article>
+<style>
+.project-showcase > div { min-width: 0; }
+.project-showcase { margin-top: 3.5rem; border-top: 2px solid var(--ink); padding: 2rem 0; display: grid; gap: 2rem; }
+h3 { font-size: clamp(1.4rem,2.4vw,2rem); line-height: 1.4; margin-bottom: 1rem; } h3 a { color:var(--ink);text-decoration:none; }
+.showcase-copy > p { color:var(--ink-2);line-height:1.8; }
+.showcase-copy .showcase-result { color:var(--cobalt-deep);font-weight:500; }
+.showcase-link { display:inline-block;margin-top:1rem;font-weight:500; }
+.evidence-label { font-size:.875rem;font-weight:500; }
+.evidence-scope { font-size:.78rem;color:var(--ink-2);margin:.75rem 0 0; }
+.product-capabilities { display:flex;flex-wrap:wrap;gap:.45rem 1rem;margin:1.2rem 0 0;color:var(--ink-2);font-size:.8rem; }
+.product-capabilities li { border-bottom:1px solid var(--rule-strong);padding-bottom:.25rem; }
+.showcase-actions { display:flex;align-items:baseline;gap:1.5rem;flex-wrap:wrap; }
+.source-link {font-size:.875rem;color:var(--ink-2);}
+.product .showcase-copy { max-width: 780px; }
+@media(min-width:900px) { .project-showcase { grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:2.5rem; } }
+.teaching-summary { align-self:start; }
+.context-pair { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem; }
+.context-pair > div { padding:1rem 0;background:transparent;border-top:1px solid var(--rule-strong); }
+.summary-label { display:block;font-size:.7rem;color:var(--ink-3);margin-bottom:.55rem;letter-spacing:.04em; }
+.context-pair strong, .answer-stage strong { font-size:.95rem;font-weight:600;line-height:1.5; }
+.context-pair p { font-size:.78rem;color:var(--ink-2);line-height:1.7;margin:.4rem 0 0; }
+.summary-join { text-align:center;color:var(--cobalt);height:1.8rem;line-height:1.8rem; }
+.answer-stage { padding:.9rem 1rem;background:var(--cobalt-tint);border:1px solid var(--rule); }
+.answer-stage span { display:block;font-size:.8rem;color:var(--ink-2);line-height:1.6;margin-top:.3rem; }
+.coverage { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.25rem 0 0;padding-top:1rem;border-top:1px solid var(--rule-strong); }
+.coverage dd { margin:0;color:var(--cobalt-deep);font-size:1.4rem;font-weight:600;font-variant-numeric:tabular-nums; }
+.coverage dt { font-size:.75rem;color:var(--ink-2);margin-top:.2rem; }
+</style>

@@ -1,0 +1,7 @@
+---
+import { notesPath } from '../../../lib/lang';
+const destination = notesPath('en', 'reliable-model-artifact-delivery');
+return Astro.redirect(destination, 301);
+---
+
+<a href={destination}>Continue to engineering notes</a>

@@ -33,3 +33,7 @@ export function projectPath(lang: Lang, slug: string): string {
 export function anchor(section: string, lang: Lang): string {
   return `${homePath(lang)}#${section}`;
 }
+
+export function notesPath(lang: Lang, slug = ""): string {
+  return `${base}${lang}/notes/${slug ? slug + "/" : ""}`;
+}
