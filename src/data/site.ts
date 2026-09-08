@@ -121,8 +121,8 @@ export const approach = [
 
 export const about = {
   education: [
-    { school: { zh: '厦门大学', en: 'Xiamen University' }, logo: '/images/organizations/xmu.png', degree: { zh: '人工智能 · 硕士', en: 'MSc in Artificial Intelligence' }, detail: { zh: '2024.09 — 2027.06', en: 'Sep 2024 — Jun 2027' } },
-    { school: { zh: '华中农业大学', en: 'Huazhong Agricultural University' }, logo: '/images/organizations/hzau.ico', degree: { zh: '智慧农业 · 本科', en: 'BSc in Smart Agriculture' }, detail: { zh: '2020.09 — 2024.06', en: 'Sep 2020 — Jun 2024' } },
+    { school: { zh: '厦门大学', en: 'Xiamen University' }, logo: 'images/organizations/xmu.png', degree: { zh: '人工智能 · 硕士', en: 'MSc in Artificial Intelligence' }, detail: { zh: '2024.09 — 2027.06', en: 'Sep 2024 — Jun 2027' } },
+    { school: { zh: '华中农业大学', en: 'Huazhong Agricultural University' }, logo: 'images/organizations/hzau.ico', degree: { zh: '智慧农业 · 本科', en: 'BSc in Smart Agriculture' }, detail: { zh: '2020.09 — 2024.06', en: 'Sep 2020 — Jun 2024' } },
   ],
   internship: {
     team: { zh: '小爱 Plus-IoT 控制组', en: 'XiaoAI Plus-IoT control team' },

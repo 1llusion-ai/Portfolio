@@ -12,6 +12,7 @@ interface Props {
 }
 const { lang } = Astro.props;
 const S = sections;
+const base = import.meta.env.BASE_URL;
 const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
 ---
 
@@ -106,8 +107,8 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
       />
       <div class="about-body" data-reveal>
           <svg class="logo-filter-defs" aria-hidden="true" width="0" height="0"><defs><filter id="remove-logo-white" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 3"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs></svg>
-          <div class="profile-row"><h3>{lang === 'zh' ? '教育背景' : 'Education'}</h3><div class="profile-entries">{about.education.map(e=><div class="organization"><img class="organization-logo" src={e.logo} alt="" width="48" height="48" loading="lazy"/><div><h4>{e.school[lang]}</h4><p>{e.degree[lang]}</p>{e.detail[lang] && <p class="profile-meta">{e.detail[lang]}</p>}</div></div>)}</div></div>
-          <div class="profile-row"><h3>{lang === 'zh' ? '实习经历' : 'Experience'}</h3><div class="organization"><img class="organization-logo" src="/images/organizations/xiaomi.ico" alt="" width="48" height="48" loading="lazy"/><div><h4>{about.internship.title[lang]}</h4><p>{about.internship.team[lang]}</p><p class="profile-meta">{about.internship.period[lang]}</p></div></div></div>
+          <div class="profile-row"><h3>{lang === 'zh' ? '教育背景' : 'Education'}</h3><div class="profile-entries">{about.education.map(e=><div class="organization"><img class="organization-logo" src={`${base}${e.logo}`} alt="" width="48" height="48" loading="lazy"/><div><h4>{e.school[lang]}</h4><p>{e.degree[lang]}</p>{e.detail[lang] && <p class="profile-meta">{e.detail[lang]}</p>}</div></div>)}</div></div>
+          <div class="profile-row"><h3>{lang === 'zh' ? '实习经历' : 'Experience'}</h3><div class="organization"><img class="organization-logo" src={`${base}images/organizations/xiaomi.ico`} alt="" width="48" height="48" loading="lazy"/><div><h4>{about.internship.title[lang]}</h4><p>{about.internship.team[lang]}</p><p class="profile-meta">{about.internship.period[lang]}</p></div></div></div>
       </div>
     </div>
   </div>
