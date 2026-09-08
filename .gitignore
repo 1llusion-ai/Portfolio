@@ -16,8 +16,8 @@ dist/
 .env.*
 !.env.example
 
-# Local-only source material — never commit or deploy this file.
-# It is user-owned and must stay out of the published site and VCS.
+# Keep the original source local. The user-approved download copy lives in
+# public/downloads/xiaofan-resume.pdf.
 秋招_肖凡.pdf
 
 # Local dev artifacts

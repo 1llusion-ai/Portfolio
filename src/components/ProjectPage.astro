@@ -9,10 +9,8 @@ import DiagramComparison from './diagrams/DiagramComparison.astro';
 import DiagramLoop from './diagrams/DiagramLoop.astro';
 import AgentCaseBody from './AgentCaseBody.astro';
 import TeachingCaseBody from './TeachingCaseBody.astro';
-import { teachingCase } from '../data/teachingCase';
 import EmbeddingCaseBody from './EmbeddingCaseBody.astro';
-import { embeddingCase } from '../data/embeddingCase';
-import { agentCase } from '../data/agentCase';
+import ContributionPanel from './ContributionPanel.astro';
 
 interface Props {
   project: Project;
@@ -42,11 +40,9 @@ const isEmbeddingCase = project.slug === 'task-aware-embedding-finetuning';
       <ul class="case-tags">
         {project.tags[lang].map((t) => <li>{t}</li>)}
       </ul>
-      {isAgentCase && <div class="agent-role"><p class="eyebrow mono">{agentCase.roleLabel[lang]}</p><p>{agentCase.role[lang]}</p></div>}
-      {isEmbeddingCase && <div class="embedding-role"><p class="eyebrow">{lang === 'zh' ? '我的职责' : 'My role'}</p><p>{embeddingCase.role[lang]}</p></div>}
-      {isTeachingCase && <div class="embedding-role"><p class="eyebrow">{lang === 'zh' ? '我的职责' : 'My role'}</p><p>{teachingCase.role[lang]}</p></div>}
     </header>
 
+    <ContributionPanel slug={project.slug} lang={lang} />
     {isAgentCase ? <AgentCaseBody lang={lang} /> : isEmbeddingCase ? <EmbeddingCaseBody lang={lang} /> : isTeachingCase ? <TeachingCaseBody lang={lang} /> : <>
     <section class="case-sec" id="problem">
       <h2 class="case-sec-title"><span class="idx">{idx(1)}</span>{L.problem[lang]}</h2>

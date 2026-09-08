@@ -1,0 +1,25 @@
+---
+import type { Lang } from '../data/site';
+import { contributions } from '../data/contributions';
+interface Props { slug: string; lang: Lang }
+const { slug, lang } = Astro.props;
+const entry = contributions[slug];
+---
+{entry && <section class="contribution-panel" id="contribution" aria-labelledby="contribution-title">
+  <p class="contribution-label">OWNERSHIP / DECISIONS</p>
+  <h2 id="contribution-title">{lang === 'zh' ? '我的贡献与关键决策' : 'My contribution and key decisions'}</h2>
+  <p class="contribution-summary">{entry.summary[lang]}</p>
+  <div class="decision-grid">{entry.decisions.map((decision, index) => <article>
+    <span class="decision-index">0{index + 1}</span><h3>{decision.title[lang]}</h3>
+    <p>{decision.reason[lang]}</p>
+    <p class="decision-tradeoff"><strong>{lang === 'zh' ? '取舍' : 'Trade-off'} · </strong>{decision.tradeoff[lang]}</p>
+  </article>)}</div>
+</section>}
+<style>
+.contribution-panel{border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:clamp(1.2rem,3vw,2rem);margin:0 0 3rem;background:var(--paper-2);}
+.contribution-label{font:400 .7rem/1.7 var(--font-mono);letter-spacing:.08em;margin-bottom:1rem;color:var(--ink-2);}
+h2{font-size:clamp(1.3rem,2.5vw,1.8rem);}.contribution-summary{font-size:.95rem;line-height:1.9;color:var(--ink-2);margin:1rem 0 1.8rem;}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2rem;}.decision-grid article{border-top:5px solid var(--butter);padding-top:1rem;min-width:0;}.decision-grid article:nth-child(2){border-color:var(--violet);}
+.decision-index{font:.8rem var(--font-mono);}h3{font-size:1.05rem;line-height:1.6;margin:.65rem 0;}article p{font-size:.875rem;line-height:1.9;color:var(--ink-2);}.decision-tradeoff{border-top:1px solid var(--rule);padding-top:.8rem;margin-bottom:0;}
+@media(max-width:700px){.decision-grid{grid-template-columns:1fr;gap:1.5rem;}}
+</style>
