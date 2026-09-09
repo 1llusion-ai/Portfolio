@@ -3305,7 +3305,7 @@ html[lang^='zh'] .case-title { letter-spacing: 0; }
 .intro h1 { font-size:clamp(2.25rem,4.4vw,3.6rem);letter-spacing:-.045em;font-weight:700;line-height:1.4; }
 .intro h1 em { font-style:normal;color:var(--ink);background:var(--lime);box-shadow:5px 5px 0 var(--ink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone; }
 .intro-description { max-width:43ch;font-size:.95rem;line-height:1.95;margin:1.8rem 0;color:var(--ink-2); }
-.intro-actions { display:flex;align-items:center;gap:1.7rem;font-size:.85rem; }
+.intro-actions { display:flex;align-items:center;gap:1rem;font-size:.85rem; }
 .intro-actions a { text-decoration:none; }
 .intro-button { display:inline-flex;justify-content:space-between;gap:2rem;align-items:center;background:var(--ink);color:var(--paper);padding:.85rem 1.2rem;min-height:48px;transition:background .2s; }
 .intro-button:hover { background:var(--cobalt);color:white; }
@@ -3333,7 +3333,12 @@ html[lang^='zh'] .case-title { letter-spacing: 0; }
 
 .intro-name { display:inline-block;border:2px solid var(--ink);padding:.3rem .7rem;background:var(--butter);color:var(--ink);box-shadow:3px 3px 0 var(--ink);transform:rotate(-2deg); }
 .intro-button { border:2px solid var(--ink);box-shadow:4px 4px 0 var(--lime); }
-.intro-actions a:last-child { border-bottom:2px solid var(--ink);padding:.7rem 0;color:var(--ink); }
+.intro-actions a { display:inline-flex;align-items:center;justify-content:center;gap:1rem;min-height:50px;padding:.75rem 1.15rem;line-height:1.4;white-space:nowrap; }
+.intro-actions .resume-download { border:0;background:transparent;box-shadow:none;padding:.75rem .35rem;color:var(--ink-2);font-size:.85rem; }
+.intro-actions .resume-download span { font:inherit; }
+.intro-actions .resume-download:hover { background:transparent;color:var(--cobalt); }
+.intro-actions a:last-child { border:0;padding:.75rem .35rem;color:var(--ink-2); }
+.intro-actions a:last-child:hover { color:var(--cobalt); }
 .portfolio-home .principle:nth-child(1) { border-top:8px solid var(--butter); }
 .portfolio-home .principle:nth-child(2) { border-top:8px solid var(--violet); }
 .portfolio-home .principle:nth-child(3) { border-top:8px solid var(--blue); }

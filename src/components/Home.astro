@@ -26,7 +26,7 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
       <h1>{lang === 'zh' ? '让模型能力，' : 'From model capability'}<br/><em>{lang === 'zh' ? '走进真实任务。' : 'to working systems.'}</em></h1>
       <p class="intro-description">{lang === 'zh' ? '我构建 Agent 工作流、领域检索与教学助手，关注复杂任务如何被拆解、执行和验证。这里记录我的系统设计、工程取舍与评测结果。' : 'I build agent workflows, domain retrieval systems and learning assistants. My work explores how complex tasks are planned, executed and verified—with the design decisions and evaluations to explain the results.'}</p>
       <div class="intro-actions"><a class="intro-button" href={anchor('work', lang)}>{cta.viewWork[lang]} <span>↘</span></a><ResumeLink lang={lang} /><a href={`mailto:${identity.email}`}>{lang === 'zh' ? '联系我' : 'Get in touch'} ↗</a></div>
-      <p class="intro-background">{lang === 'zh' ? '厦门大学 · 人工智能硕士在读 / 小米 · 算法实习经历' : 'AI master’s student, Xiamen University / Former algorithm intern, Xiaomi'}</p>
+      <p class="intro-background"><svg class="student-status-dot" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle class="student-status-halo" cx="9" cy="9" r="7" fill="#32834b" opacity=".18"/><circle cx="9" cy="9" r="3.5" fill="#32834b"/></svg><span>{lang === 'zh' ? '厦门大学 · 人工智能硕士在读' : 'Currently pursuing a master’s in AI · Xiamen University'}</span></p>
     </div>
     <HeroRecord lang={lang} />
   </div>
@@ -98,5 +98,10 @@ const heroLabel = lang === 'zh' ? '首页介绍' : 'Introduction';
 <section class="closing" id="contact"><div class="container closing-inner"><div><p class="intro-eyebrow">LET’S CONNECT</p><h2>{lang === 'zh' ? '聊聊下一个值得解决的问题。' : 'Let’s talk about the next problem.'}</h2><p>{lang === 'zh' ? '正在寻找大模型算法与 Agent 相关机会，欢迎交流项目与实践。' : 'Seeking opportunities in LLM algorithms and agent systems. Happy to discuss the work.'}</p></div><div class="closing-actions"><ResumeLink lang={lang} /><a href={`mailto:${identity.email}`}>{lang === 'zh' ? '发邮件给我' : 'Email me'} ↗</a></div></div></section>
 </div>
 <style>
-.intro-actions{flex-wrap:wrap;gap:1rem 1.4rem;}.closing-actions{display:flex;flex-wrap:wrap;gap:1rem;flex-shrink:0;align-items:center;}
+.intro-actions{flex-wrap:wrap;gap:1rem;}.closing-actions{display:flex;flex-wrap:wrap;gap:1rem;flex-shrink:0;align-items:center;}
+.intro-background{display:flex;align-items:center;gap:.45rem;}
+.student-status-dot{display:block;width:18px;height:18px;flex:0 0 18px;overflow:visible;}
+.student-status-halo{transform-origin:9px 9px;animation:student-status-breathe 1.5s ease-in-out infinite alternate;}
+@keyframes student-status-breathe{from{transform:scale(.72);opacity:.12;}to{transform:scale(1);opacity:.32;}}
+@media(prefers-reduced-motion:reduce){.student-status-halo{animation:none;opacity:.18;}}
 </style>
